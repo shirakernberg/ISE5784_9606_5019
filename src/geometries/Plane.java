@@ -8,7 +8,7 @@ import primitives.Vector;
  * It is defined by a point on the plane and a normal vector.
  */
 public class Plane implements Geometry {
-    /** A point on the plane */
+    /** A point on the plane. */
     final private Point q;
 
     /** The normal vector of the plane */

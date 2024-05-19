@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * This class represents a point in a 3D space using three numbers (x, y, z)
- * and provides various methods to operate on these points.
+ * and provides various methods to operate on these points
  */
 public class Point {
     /** The coordinates of the point */

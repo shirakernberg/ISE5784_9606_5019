@@ -26,7 +26,7 @@ public class Tube extends RadialGeometry {
     }
 
     /**
-     * Returns the normal vector to the tube at a given point.
+     * Returns the normal vector to the tube at a given point
      *
      * @param p the point on the tube
      * @return the normal vector at the given point

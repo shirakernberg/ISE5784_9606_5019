@@ -6,7 +6,7 @@ import primitives.Vector;
 
 /**
  * This class represents a cylinder in 3D space, defined by a height, an axis ray, and a radius.
- * It extends the Tube class.
+ * It extends the Tube class
  */
 public class Cylinder extends Tube {
     /** The height of the cylinder */

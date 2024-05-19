@@ -5,7 +5,7 @@ import primitives.Vector;
 
 /**
  * RadialGeometry is an abstract class representing geometric shapes with a radius.
- * It implements the Geometry interface.
+ * It implements the Geometry interface
  */
 public abstract class RadialGeometry implements Geometry {
     /** The radius of the geometric shape */
