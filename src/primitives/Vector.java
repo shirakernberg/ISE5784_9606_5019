@@ -19,7 +19,7 @@ public class Vector extends Point {
      * one double3 parameter ctor for vector
      * @param xyz=the double3 value of the vector xtz
      */
-    public Vector(Double3 xyz) {
+    Vector(Double3 xyz) {
         super(xyz);
         if (xyz.equals(Double3.ZERO))
             throw new IllegalArgumentException("error received trivial vector");

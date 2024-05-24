@@ -35,7 +35,10 @@ public class Plane implements Geometry {
      */
     public Plane(Point p1, Point p2, Point p3) {///////////
         q=p1;
-        this.normal=null;
+//        Vector v1 = p2.subtract(p1);
+//        Vector v2 = p3.subtract(p1);
+//        this.normal = v1.crossProduct(v2).normalize();
+        this.normal = null;
     }
 
     /**
@@ -57,4 +60,8 @@ public class Plane implements Geometry {
     public Vector getNormal(Point p){ //////////
         return normal.normalize();
     }
+
+
+
+
 }

@@ -31,7 +31,7 @@ public class Point {
      *
      * @param xyz Double3 object containing x, y, and z coordinates
      */
-    public Point(Double3 xyz) {
+    Point(Double3 xyz) {
         this.xyz = xyz;
     }
 
