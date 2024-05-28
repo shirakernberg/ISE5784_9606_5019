@@ -8,7 +8,9 @@ import primitives.Vector;
  * It is defined by a center point and a radius.
  */
 public class Sphere extends RadialGeometry {
-    /** The center point of the sphere */
+    /**
+     * The center point of the sphere
+     */
     final private Point center;
 
     /**
@@ -30,7 +32,7 @@ public class Sphere extends RadialGeometry {
      */
     @Override
     public Vector getNormal(Point p) {
-        // Implementation to calculate the normal vector
-        return null;
+        Vector n = p.subtract(this.center);
+        return n.normalize();
     }
 }

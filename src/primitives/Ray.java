@@ -25,6 +25,14 @@ public class Ray {
         this.direction = direction.normalize();
     }
 
+    public Point getHead() {
+        return head;
+    }
+
+    public Vector getDirection() {
+        return direction;
+    }
+
     /**
      * Checks if this ray is equal to another object.
      *

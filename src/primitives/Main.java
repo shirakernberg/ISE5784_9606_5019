@@ -87,7 +87,7 @@ public final class Main {
             v1.subtract(v1);
             out.println("ERROR: Vector - itself does not throw an exception");
         } catch (IllegalArgumentException ignore) {} catch (Exception ignore) {
-            out.println("ERROR: Vector + itself throws wrong exception");
+            out.println("ERROR: Vector + itself throws wrong exception");/////////////////////
         }
         if (!v1.add(v2).equals(v1Opposite))
             out.println("ERROR: Vector + Vector does not work correctly");

@@ -22,13 +22,11 @@ public class Cylinder extends Tube {
         super(axis, radius);
         this.height = height;
     }
-    /*
-     * @Override
-     *     public Vector getNormal(Point p) {
-     *         return null;
-     *     }
-     */
 
+    @Override
+    public Vector getNormal(Point point) {
+        return super.getNormal(point);
+    }
 
     }
 
