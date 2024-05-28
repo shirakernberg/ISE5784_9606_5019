@@ -26,7 +26,7 @@ class PlaneTests {
         // TC01: There is a simple single test here - using a quad
         Plane pl = new Plane(new Point(0, 0, 0), new Point(1, 0, 0), new Point(0, 1, 0));
         Point p = new Point(0.5, 0.5, 0);
-        assertDoesNotThrow(()-> pl.getNormal(p), "");
+        assertDoesNotThrow(()-> pl.getNormal(p), "should not throw an exception");
         // ensure the point is on the plane
         Vector test= pl.getQ().subtract(p);
         double dotResult = pl.getNormal(p).dotProduct(test);
