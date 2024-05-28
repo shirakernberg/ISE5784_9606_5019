@@ -13,7 +13,9 @@ class SphereTests {
         // ============ Equivalence Partitions Tests ==============
         // TC01: There is a simple single test here - using a quad
         Sphere s = new Sphere(new Point(0, 0, 0), 1);
-        // ensure there are no exceptions
+        // ensure point is on the sphere
+        double test = s.getCenter().distance(new Point(0, 0, 0));
+        assertTrue(test <= s.radius, "the point is not on the sphere surface");
         assertDoesNotThrow(() -> s.getNormal(new Point(0, 1, 0)), "");
         // generate the test result
         Vector result = s.getNormal(new Point(0, 1, 0));

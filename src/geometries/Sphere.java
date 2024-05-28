@@ -14,8 +14,14 @@ public class Sphere extends RadialGeometry {
     final private Point center;
 
     /**
+     * @return the center point of the sphere
+     */
+    public Point getCenter() {
+        return center;
+    }
+
+    /**
      * Constructor to initialize a Sphere object with a given center point and radius.
-     *
      * @param center the center point of the sphere
      * @param radius the radius of the sphere
      */
@@ -26,7 +32,6 @@ public class Sphere extends RadialGeometry {
 
     /**
      * Returns the normal vector to the sphere at a given point.
-     *
      * @param p the point on the sphere
      * @return the normal vector at the given point.
      */

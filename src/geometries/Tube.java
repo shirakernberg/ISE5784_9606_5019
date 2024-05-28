@@ -7,7 +7,6 @@ import primitives.Vector;
 /**
  * Tube class represents a tube in 3D space.
  * It is defined by an axis ray and a radius.
- *
  * @version 1.0
  */
 public class Tube extends RadialGeometry {
@@ -16,7 +15,6 @@ public class Tube extends RadialGeometry {
 
     /**
      * Constructor to initialize a Tube object with a given axis ray and radius.
-     *
      * @param axis the axis ray of the tube
      * @param radius the radius of the tube
      */
@@ -25,7 +23,17 @@ public class Tube extends RadialGeometry {
         this.axis = axis;
     }
 
-
+    /**
+     * @return  the axis ray of the tube.
+     */
+    public Ray getAxis() {
+        return axis;
+    }
+/**
+     * Returns the normal vector to the tube at a given point.
+     * @param p the point on the tube
+     * @return the normal vector at the given point.
+     */
     @Override
     public Vector getNormal(Point p) {
         Point p0 = axis.getHead();

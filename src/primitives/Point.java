@@ -2,8 +2,6 @@ package primitives;
 
 import java.util.Objects;
 
-
-
 /**
  * This class represents a point in a 3D space using three numbers (x, y, z)
  * and provides various methods to operate on these points
@@ -17,7 +15,6 @@ public class Point {
 
     /**
      * Constructor to initialize Point object with given x, y, and z coordinates.
-     *
      * @param x x-coordinate value
      * @param y y-coordinate value
      * @param z z-coordinate value
@@ -28,7 +25,6 @@ public class Point {
 
     /**
      * Constructor to initialize Point object with a Double3 object.
-     *
      * @param xyz Double3 object containing x, y, and z coordinates
      */
     Point(Double3 xyz) {
@@ -37,7 +33,6 @@ public class Point {
 
     /**
      * Checks if this point is equal to another object.
-     *
      * @param obj = object for comparison
      * @return true/false according to if they are equal
      */
@@ -50,7 +45,6 @@ public class Point {
 
     /**
      * Returns a hash code value for the point.
-     *
      * @return hash code value
      */
     @Override
@@ -60,7 +54,6 @@ public class Point {
 
     /**
      * Returns a string representation of the point.
-     *
      * @return string representation of the point
      */
     @Override
@@ -70,7 +63,6 @@ public class Point {
 
     /**
      * Calculates the distance between this point and another point.
-     *
      * @param p the other point
      * @return the distance between the two points
      */
@@ -80,7 +72,6 @@ public class Point {
 
     /**
      * Calculates the squared distance between this point and another point.
-     *
      * @param p the other point
      * @return the squared distance between the two points
      */
@@ -93,7 +84,6 @@ public class Point {
 
     /**
      * Adds a vector to this point and returns a new point.
-     *
      * @param v the vector to add
      * @return a new point resulting from the addition
      */
@@ -103,7 +93,6 @@ public class Point {
 
     /**
      * Subtracts another point from this point and returns a vector.
-     *
      * @param p the point to subtract
      * @return a new vector resulting from the subtraction
      */

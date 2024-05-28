@@ -16,7 +16,6 @@ public class Ray {
     /**
      * Constructor to initialize a Ray object with a given head point and direction vector.
      * The direction vector is normalized.
-     *
      * @param head the starting point of the ray
      * @param direction the direction vector of the ray
      */
@@ -25,17 +24,21 @@ public class Ray {
         this.direction = direction.normalize();
     }
 
+    /**
+     * @return the starting point of the ray.
+     */
     public Point getHead() {
         return head;
     }
-
+    /**
+     * @return the direction of the ray.
+     */
     public Vector getDirection() {
         return direction;
     }
 
     /**
      * Checks if this ray is equal to another object.
-     *
      * @param o the object to compare with
      * @return true if the objects are equal, false otherwise
      */
@@ -48,7 +51,6 @@ public class Ray {
 
     /**
      * Returns a hash code value for the ray.
-     *
      * @return hash code value
      */
     @Override
@@ -58,7 +60,6 @@ public class Ray {
 
     /**
      * Returns a string representation of the ray.
-     *
      * @return string representation of the ray
      */
     @Override
