@@ -13,7 +13,6 @@ public abstract class RadialGeometry implements Geometry {
 
     /**
      * Constructor to initialize RadialGeometry with a given radius.
-     *
      * @param radius the radius of the geometric shape
      */
     public RadialGeometry(double radius) {

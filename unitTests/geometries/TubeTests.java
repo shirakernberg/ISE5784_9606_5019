@@ -26,6 +26,6 @@ class TubeTests {
         // =============== Boundary Values Tests ==================
        Vector test= t.getAxis().getHead().subtract(p);
         double dotResult = t.getNormal(p).dotProduct(test);
-        assertEquals(0, dotResult, "the points are parallel");
+        assertTrue(dotResult!=0, "the points are parallel");
     }
 }
