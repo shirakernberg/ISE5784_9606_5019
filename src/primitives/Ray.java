@@ -2,6 +2,8 @@ package primitives;
 
 import java.util.Objects;
 
+import static primitives.Util.isZero;
+
 /**
  * This class represents a ray in 3D space defined by a starting point and a direction vector.
  * The direction vector is always normalized.
@@ -24,6 +26,15 @@ public class Ray {
         this.direction = direction.normalize();
     }
 
+    /**
+     * @param t the distance
+     * @return the ray points from a given distance
+     */
+    public Point getPoint(double t){
+        if(isZero(t))
+            return head;
+        return head.add(direction.scale(t));
+    }
     /**
      * @return the starting point of the ray.
      */

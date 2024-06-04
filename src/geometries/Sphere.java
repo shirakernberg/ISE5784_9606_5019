@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+import static primitives.Util.*;
+import java.util.List;
 
 /**
  * Sphere class represents a sphere in 3D space.
@@ -39,5 +42,45 @@ public class Sphere extends RadialGeometry {
     public Vector getNormal(Point p) {
         Vector n = p.subtract(this.center);
         return n.normalize();
+    }
+
+    /**
+     * Find intersections of a ray with the sphere.
+     * @param ray the ray to find intersections with
+     * @return a list of intersection points with the sphere
+     */
+    public List<Point> findIntersections(Ray ray) {
+        Vector u;
+        //if the ray starts at the center of the sphere
+        try {
+            u = center.subtract(ray.getHead());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+
+        double tm = alignZero(ray.getDirection().dotProduct(u));
+        double d = alignZero(Math.sqrt(u.lengthSquared() - tm * tm));
+        //if distance from the ray to the center is greater than the radius
+        if (d >= radius)
+            return null;
+
+        double th = alignZero(Math.sqrt(radius * radius - d * d));
+        double t1 = tm - th;
+        double t2 = tm + th;
+
+        //if there are 2 intersection points
+        if(t1 > 0 && t2 > 0) {
+            return List.of(ray.getPoint(t1),ray.getPoint(t2));
+        }
+        //if there is only 1 intersection point
+        else if(t1 > 0) {
+            return List.of(ray.getPoint(t1));
+        }
+        else if(t2 > 0) {
+            return List.of(ray.getPoint(t2));
+        }
+
+        //no intersection points
+        return null;
     }
 }
