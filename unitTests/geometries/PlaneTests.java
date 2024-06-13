@@ -53,21 +53,21 @@ class PlaneTests {
         assertEquals(List.of(new Point(-1, 1.5, 0)), result, "Ray intersects the plane");
 
         // TC02:Ray does not intersect the plane (0 points)
-        assertNull(pl.findIntersections(new Ray(new Point(3, 1, 0.5), new Vector(1, 1, 1))), "Ray not intersects the plane");
+        assertNull(pl.findIntersections(new Ray(new Point(3, 1, 0.5), new Vector(1, 1, 1))), "Ray doesnt intersect the plane");
 
         // =============== Boundary Values Tests ==================
 
         // **Group: Ray is parallel to the plane
         // TC11: Ray included in the plane (0 points)
-        assertNull(pl.findIntersections(new Ray(new Point(3, 1, 0), new Vector(1, 1, 0))), "Ray in the plane");
+       assertNull(pl.findIntersections(new Ray(new Point(3, 1, 0), new Vector(1, 1, 0))), "Ray in the plane");
 
         // TC12: Ray not included in the plane (0 points)
         assertNull(pl.findIntersections(new Ray(new Point(3, 1, 0.5), new Vector(1, 1, 0))), "Ray not included in the plane");
         // **Group: Ray is orthogonal to the plane
         //TC13: Ray starts before the plane (1 point)
-        result = pl.findIntersections(new Ray(new Point(-4, 3, -2), new Vector(0, 0, 1)));
-        assertEquals( 1, result.size(),"Wrong number of points");
-        assertEquals(List.of(new Point(-4, 3, 0)), result,"Ray is orthogonal to the plane and starts before the plane");
+       result = pl.findIntersections(new Ray(new Point(-4, 3, -2), new Vector(0, 0, 1)));
+       assertEquals( 1, result.size(),"Wrong number of points");
+       assertEquals(List.of(new Point(-4, 3, 0)), result,"Ray is orthogonal to the plane and starts before the plane");
 
         //TC14: Ray starts in the plane (0 points)
         assertNull(pl.findIntersections(new Ray(new Point(3, 1, 0), new Vector(0, 0, 1))), "Ray is orthogonal to the plane and starts in the plane");
@@ -78,7 +78,7 @@ class PlaneTests {
         //TC16:Ray is neither orthogonal nor parallel to and begins at the plane (0 options)
         assertNull(pl.findIntersections(new Ray(new Point(3, 1, 0), new Vector(0, 1, 1))), "Ray begins at the plane");
         //TC17:
-        assertNull(pl.findIntersections(new Ray(new Point(1, 0, 0), new Vector(0, 1, 2))), "Ray begins at the plane");
+        assertNull(pl.findIntersections(new Ray(new Point(1, 0, 1), new Vector(0, 1, 2))), "Ray begins at the plane");
 
     }
     }

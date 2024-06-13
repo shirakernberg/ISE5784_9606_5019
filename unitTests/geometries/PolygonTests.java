@@ -3,6 +3,8 @@ package geometries;
 import org.junit.jupiter.api.Test;
 import primitives.*;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -84,5 +86,43 @@ public class PolygonTests {
         for (int i = 0; i < 3; ++i)
             assertEquals(0d, result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1])), DELTA,
                     "Polygon's normal is not orthogonal to one of the edges");
+    }
+    /***
+     * testing findIntersections
+     */
+    @Test
+    void testFindIntersections() {
+        Polygon polygon = new Polygon(new Point(2, 0, 1), new Point(0, 0, 1), new Point(-5, 2, 1), new Point(2, 2, 1));
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01:the intersections point is contained plane is inside the triangle(1
+        // point)
+
+        assertEquals(List.of(new Point(0.8, 0.4, 1)),
+                polygon.findIntersections(new Ray(new Point(0.5, 0.5, 0.5), new Vector(1.5, -0.5, 2.5))),
+                "TC01: polygon findIntersections");
+        assertEquals(List.of(new Point(1.056346414033179, 0.230281177984621, 1)), polygon.findIntersections(
+                        new Ray(new Point(3.209293107932101, 0, 0), new Vector(-2.152946693898922, 0.230281177984621, 1))),
+                "TC01: polygon findIntersections");
+        // TC02:the intersections point is contained plane is outside the triangle
+        // facing one of triangle's edge
+        assertNull(polygon.findIntersections(new Ray(new Point(-0.5, -0.5, -0.5), new Vector(2.5, 0.5, 3.5))),
+                "TC02: polygon findIntersections");
+        // TC03:the intersections point is contained plane is outside the triangle
+        // facing one of triangle's vertex
+        assertNull(polygon.findIntersections(new Ray(new Point(3, -0.5, 0.5), new Vector(1, 0, 3.5))),
+                "TC03: polygon findIntersections");
+        // ============ Equivalence Partitions Tests ==============
+        // TC11:The intersections point with contained plane is on one of the edges
+        assertNull(polygon.findIntersections(new Ray(new Point(1, 0, -1), new Vector(0, 0, 2))),
+                "TC11: polygon findIntersections");
+        // TC12:The intersections point with contained plane is on one of the vertex
+        assertNull(polygon.findIntersections(new Ray(new Point(2, 0, 0), new Vector(0, 0, 2))),
+                "TC12: polygon findIntersections");
+        // TC13:The intersections point with contained plane is on on of the edges's
+        // continuance
+        assertNull(polygon.findIntersections(new Ray(new Point(3, 0, 0), new Vector(-8, 0, 10))),
+                "TC13: polygon findIntersections");
+
     }
 }

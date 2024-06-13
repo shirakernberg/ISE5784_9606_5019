@@ -6,6 +6,8 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static primitives.Util.isZero;
+
 /**
  * This class represents a plane in 3D space.
  * It is defined by a point on the plane and a normal vector.
@@ -71,7 +73,13 @@ public class Plane implements Geometry {
      */
     @Override
     public List<Point> findIntersections(Ray ray) {
-        double t= (normal.dotProduct(q.subtract(ray.getHead()))) / (normal.dotProduct(ray.getDirection()));
+        double nv=normal.dotProduct(ray.getDirection());
+        if(isZero(nv))
+            return null;
+        double t= (normal.dotProduct(q.subtract(ray.getHead())) / nv);
+        if(isZero(t) || t<0)
+            return null;
+
         return List.of(ray.getPoint(t));
     }
 }

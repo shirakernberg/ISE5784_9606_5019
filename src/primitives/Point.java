@@ -99,4 +99,12 @@ public class Point {
     public Vector subtract(Point p) {
         return new Vector(xyz.subtract(p.xyz));
     }
+
+    public double getY() {
+        return xyz.d2;
+    }
+
+    public double getX() {
+        return xyz.d1;
+    }
 }

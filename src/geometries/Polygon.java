@@ -2,6 +2,7 @@ package geometries;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 import primitives.Point;
@@ -89,6 +90,35 @@ public class Polygon implements Geometry {
     */
    @Override
    public List<Point> findIntersections(Ray ray) {
-      return List.of();
+      List<Point> intersectionPoints = plane.findIntersections(ray);
+      if (intersectionPoints == null) {
+         return null;
+      }
+      // if there is a potential point to check
+      Point intersectionPoint = intersectionPoints.getFirst();
+
+      // check if the intersection point is within the polygon
+      int counter = 0;
+      for (int i = 0; i < this.size; i++) {
+         Point vertex1 = vertices.get(i);
+         Point vertex2 = vertices.get((i + 1) % this.size);
+         Vector edge = vertex2.subtract(vertex1);
+         Vector normal = null;
+         try {
+            normal = edge.crossProduct(intersectionPoint.subtract(vertex1)).normalize();
+
+         } catch (Exception e) {
+
+            return null;
+         }
+         // counting the number of normals who has the same sign
+         if (alignZero(normal.dotProduct(plane.getNormal())) < 0) {
+            counter += 1;
+         } else if (alignZero(normal.dotProduct(plane.getNormal())) > 0) {
+            counter -= 1;
+         }
+      }
+      // if absolute sum is equal to number of vertices then the point is within
+      return Math.abs(counter) == this.vertices.size() ? intersectionPoints : null;
    }
 }
