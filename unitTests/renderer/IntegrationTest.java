@@ -1,100 +1,96 @@
 package renderer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import primitives.*;
+
 import geometries.*;
+import primitives.*;
+import renderer.*;
 
-import java.util.List;
-
-/**
- * Integration tests for Camera rays and geometric bodies intersections.
+/***
+ * integration testing camera&ray through barriers
+ *
+ * @author Ayala and Tamar
+ *
  */
-public class IntegrationTest {
+class IntegrationTest {
     private Camera.Builder cameraBuilder = Camera.getBuilder()
-            .setLocation(Point.ZERO)
-            .setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0))
-            .setVpDistance(10);
+            .setLocation(new Point(0,0,0))
+            .setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
+            .setVpDistance(1);
 
-    @Test
-    public void testSphereIntersections() throws CloneNotSupportedException {
-        Camera camera = cameraBuilder.setVpSize(3, 3).build();
-        Sphere sphere = new Sphere(new Point(0, 0, -20), 5);
-
-        System.out.println("Testing Sphere with radius 5 at (0, 0, -20)");
-        int intersections = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                Ray ray = camera.constructRay(3, 3, j, i);
-                System.out.println("Constructed Ray: " + ray);
-                List<Point> points = sphere.findIntersections(ray);
-                if (points != null) {
-                    intersections += points.size();
-                    System.out.println("Ray: " + ray + ", Intersections: " + points.size());
-                    for (Point p : points) {
-                        System.out.println("Intersection Point: " + p);
-                    }
-                } else {
-                    System.out.println("Ray: " + ray + ", Intersections: 0");
-                }
+    /***
+     * get a geometry, camera and expected number of intersections and checks
+     * whether the expect number is what we really get.
+     *
+     * @param cam camera to shut rays from
+     * @param geo geometry to find interactions at
+     * @param res the expected number of intersections
+     */
+    void CameraRayIntegrations(Camera cam, Geometry geo, int res) {
+        int numInterctions = 0;
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                Ray pixelRay = cam.constructRay(3, 3, j, i);
+                numInterctions += geo.findIntersections(pixelRay) == null ? 0 : geo.findIntersections(pixelRay).size();
             }
         }
-        System.out.println("Total Intersections: " + intersections);
-        assertEquals(18, intersections, "Wrong number of intersections for Sphere small radius");
+        assertEquals(res, numInterctions, "CameraRayIntegration");
     }
 
+    /**
+     * interaction testing between sphere and rays made by camera
+     */
     @Test
-    public void testPlaneIntersections() throws CloneNotSupportedException {
-        Camera camera = cameraBuilder.setVpSize(3, 3).build();
-        Plane plane = new Plane(new Point(0, 0, -20), new Vector(0, 0, 1));
+    void CameraRayIntegrationSphere() throws CloneNotSupportedException {
+        Camera cam = cameraBuilder.setVpSize(3, 3).build();
 
-        System.out.println("Testing Plane at (0, 0, -20) with normal (0, 0, 1)");
-        int intersections = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                Ray ray = camera.constructRay(3, 3, j, i);
-                System.out.println("Constructed Ray: " + ray);
-                List<Point> points = plane.findIntersections(ray);
-                if (points != null) {
-                    intersections += points.size();
-                    System.out.println("Ray: " + ray + ", Intersections: " + points.size());
-                    for (Point p : points) {
-                        System.out.println("Intersection Point: " + p);
-                    }
-                } else {
-                    System.out.println("Ray: " + ray + ", Intersections: 0");
-                }
-            }
-        }
-        System.out.println("Total Intersections: " + intersections);
-        assertEquals(9, intersections, "Wrong number of intersections for Plane");
+        // TC01: the sphere is in front of the view plane(2).
+        CameraRayIntegrations(cam, new Sphere(new Point(0, 0, -3), 1), 2);
+
+        // TC02: the view plane is inside the sphere, all rays should intersect
+        // twice(18).
+        CameraRayIntegrations(cam, new Sphere(new Point(0, 0, -3), 2.5), 18);
+
+        // TC03: the view plane cross the sphere (10).
+        CameraRayIntegrations(cam, new Sphere(new Point(0, 0, -2.5), 2), 10);
+
+        // TC04: the camera is inside the sphere,all rays should intersect only once(9).
+        CameraRayIntegrations(cam, new Sphere(new Point(0, 0, -1.1), 4), 9);
+
+        // TC05: the sphere is behind the camera , no ray should intersect(0).
+        CameraRayIntegrations(cam, new Sphere(new Point(0, 0, 1), 0.5), 0);
     }
 
+    /***
+     * interaction testing between plane and rays made by camera
+     */
     @Test
-    public void testTriangleIntersections() throws CloneNotSupportedException {
-        Camera camera = cameraBuilder.setVpSize(3, 3).build();
-        Triangle triangle = new Triangle(new Point(0, 1, -20), new Point(-1, -1, -20), new Point(1, -1, -20));
+    void CameraRayIntegrationPlane() throws CloneNotSupportedException {
+        Camera cam = cameraBuilder.setVpSize(3, 3).build();
 
-        System.out.println("Testing Triangle with vertices (0, 1, -20), (-1, -1, -20), (1, -1, -20)");
-        int intersections = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                Ray ray = camera.constructRay(3, 3, j, i);
-                System.out.println("Constructed Ray: " + ray);
-                List<Point> points = triangle.findIntersections(ray);
-                if (points != null) {
-                    intersections += points.size();
-                    System.out.println("Ray: " + ray + ", Intersections: " + points.size());
-                    for (Point p : points) {
-                        System.out.println("Intersection Point: " + p);
-                    }
-                } else {
-                    System.out.println("Ray: " + ray + ", Intersections: 0");
-                }
-            }
-        }
-        System.out.println("Total Intersections: " + intersections);
-        assertEquals(1, intersections, "Wrong number of intersections for Triangle");
+        // TC01:Plane is parallel to view plain(9)
+        CameraRayIntegrations(cam, new Plane(new Point(0,0,-5), new Vector(0,0,1)), 9);
+
+        // TC02:Plane is not parallel -tilted a bit towards the view plain(9)
+        CameraRayIntegrations(cam, new Plane(new Point(0,0,-5), new Vector(0,1,2)), 9);
+
+        // TC02:Plane is not parallel -tilted (big tilted ) towards the view plain(6)
+        CameraRayIntegrations(cam, new Plane(new Point(0,0,-5), new Vector(0,1,1)), 6);
+    }
+
+    /***
+     * interaction testing between triangle and rays made by camera
+     */
+    @Test
+    void CameraRayIntegrationTriangle() throws CloneNotSupportedException {
+        Camera cam = cameraBuilder.setVpSize(3, 3).build();
+
+        // TC01:The triangle is Little (1)
+        CameraRayIntegrations(cam, new Triangle(new Point(0, 1, -2), new Point(1, -1, -2), new Point(-1, -1, -2)), 1);
+
+        // TC02:The triangle is bigger-and go out through the view plane (1)
+        CameraRayIntegrations(cam, new Triangle(new Point(0, 20, -2), new Point(1, -1, -2), new Point(-1, -1, -2)), 2);
     }
 }

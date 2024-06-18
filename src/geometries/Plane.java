@@ -74,7 +74,7 @@ public class Plane implements Geometry {
     @Override
     public List<Point> findIntersections(Ray ray) {
         double nv=normal.dotProduct(ray.getDirection());
-        if(isZero(nv))
+        if(isZero(nv) || this.q.equals(ray.getHead()))
             return null;
         double t= (normal.dotProduct(q.subtract(ray.getHead())) / nv);
         if(isZero(t) || t<0)
