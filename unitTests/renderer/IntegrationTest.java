@@ -43,8 +43,10 @@ class IntegrationTest {
      * interaction testing between sphere and rays made by camera
      */
     @Test
-    void CameraRayIntegrationSphere() throws CloneNotSupportedException {
-        Camera cam = cameraBuilder.setVpSize(3, 3).build();
+    void CameraRayIntegrationSphere()  {
+        Camera cam = cameraBuilder
+                .setVpSize(3, 3)
+                .build();
 
         // TC01: the sphere is in front of the view plane(2).
         CameraRayIntegrations(cam, new Sphere(new Point(0, 0, -3), 1), 2);
@@ -67,7 +69,7 @@ class IntegrationTest {
      * interaction testing between plane and rays made by camera
      */
     @Test
-    void CameraRayIntegrationPlane() throws CloneNotSupportedException {
+    void CameraRayIntegrationPlane() {
         Camera cam = cameraBuilder.setVpSize(3, 3).build();
 
         // TC01:Plane is parallel to view plain(9)
@@ -84,7 +86,7 @@ class IntegrationTest {
      * interaction testing between triangle and rays made by camera
      */
     @Test
-    void CameraRayIntegrationTriangle() throws CloneNotSupportedException {
+    void CameraRayIntegrationTriangle() {
         Camera cam = cameraBuilder.setVpSize(3, 3).build();
 
         // TC01:The triangle is Little (1)
