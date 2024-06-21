@@ -6,20 +6,26 @@ import primitives.Ray;
 
 import java.util.MissingResourceException;
 
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 /**
  * Camera class represents a camera in 3D space with a position and orientation.
  * It uses the Builder design pattern to construct instances.
  */
 public class Camera implements Cloneable {
+    // Camera fields
+    // Location of the camera
     private Point location;
+    // Direction vectors
     private Vector to, up, right;
+    // View plane dimensions
     private double vpWidth = 0.0;
     private double vpHeight = 0.0;
     private double vpDistance = 0.0;
 
     // Private constructor for the Builder to use
-    private Camera() {
-    }
+    private Camera() {}
 
     /**
      * Returns a new Builder instance for creating a Camera.
@@ -34,6 +40,7 @@ public class Camera implements Cloneable {
      * Builder class for constructing Camera instances.
      */
     public static class Builder {
+        // Camera instance to build
         final private Camera camera;
 
         /**
@@ -89,7 +96,7 @@ public class Camera implements Cloneable {
          * @return The current Builder instance.
          */
         public Builder setVpSize(double vpWidth, double vpHeight) {
-            if (vpWidth <= 0 || vpHeight <= 0)
+            if (alignZero(vpWidth) <= 0 || alignZero(vpHeight) <= 0)
                 throw new IllegalArgumentException("View plane dimensions must be positive");
             this.camera.vpWidth = vpWidth;
             this.camera.vpHeight = vpHeight;
@@ -114,7 +121,7 @@ public class Camera implements Cloneable {
          *
          * @return The constructed Camera instance.
          */
-        public Camera build() throws CloneNotSupportedException {
+        public Camera build()  {
             // Check for missing fields
             if (this.camera.location == null) {
                 throw new MissingResourceException("Missing required parameter: location", Camera.class.getName(), "location");
@@ -136,7 +143,12 @@ public class Camera implements Cloneable {
                 throw new IllegalArgumentException("View plane distance must be set");
             }
 
-            return (Camera) this.camera.clone();
+            try {
+                return (Camera) camera.clone();
+            } catch (CloneNotSupportedException ignore) {
+                return null;
+            }
+
         }
     }
 
@@ -159,9 +171,9 @@ public class Camera implements Cloneable {
         double yi = (i - (nY - 1) / 2.0) * rY;
         double xj = (j - (nX - 1) / 2.0) * rX;
         Point pij = pc;
-        if (xj != 0)
+        if (!isZero(xj))
             pij = pij.add(right.scale(xj));
-        if (yi != 0)
+        if (!isZero(yi))
             pij = pij.add(up.scale(-yi));
         Vector vij = pij.subtract(location);
         return new Ray(location, vij);
@@ -196,5 +208,6 @@ public class Camera implements Cloneable {
     public double getVpDistance() {
         return vpDistance;
     }
+
 }
 
