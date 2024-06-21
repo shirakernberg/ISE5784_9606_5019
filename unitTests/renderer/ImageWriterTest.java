@@ -1,12 +1,11 @@
 package renderer;
 
 
-import static java.awt.Color.RED;
-import static java.awt.Color.YELLOW;
-
 import primitives.Color;
 
 import org.junit.jupiter.api.Test;
+
+import static java.awt.Color.*;
 
 /**
  * ImageWriter class unit tests
@@ -25,7 +24,7 @@ public class ImageWriterTest {
 
         int interval = 50;
 
-        Color colorYellow = new Color(YELLOW); // yellow
+        Color colorYellow = new Color(GREEN); // yellow
         Color colorRed = new Color(RED); // red
 
         for (int i = 0; i < nY; ++i) {
