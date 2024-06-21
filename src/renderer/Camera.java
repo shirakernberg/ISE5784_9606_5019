@@ -23,7 +23,6 @@ public class Camera implements Cloneable {
 
     /**
      * Returns a new Builder instance for creating a Camera.
-     *
      * @return A new Camera Builder.
      */
     public static Builder getBuilder() {
@@ -98,7 +97,6 @@ public class Camera implements Cloneable {
 
         /**
          * Sets the distance from the camera to the view plane.
-         *
          * @param vpDistance Distance to the view plane.
          * @return The current Builder instance.
          */
@@ -111,7 +109,6 @@ public class Camera implements Cloneable {
 
         /**
          * Builds and returns the Camera instance.
-         *
          * @return The constructed Camera instance.
          */
         public Camera build() throws CloneNotSupportedException {
@@ -142,7 +139,6 @@ public class Camera implements Cloneable {
 
     /**
      * Constructs a ray through a specific pixel in the view plane.
-     *
      * @param nX Number of columns (pixels) in the view plane.
      * @param nY Number of rows (pixels) in the view plane.
      * @param j Column index of the pixel.

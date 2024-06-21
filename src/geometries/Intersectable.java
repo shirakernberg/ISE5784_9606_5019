@@ -9,7 +9,7 @@ public interface Intersectable {
 
 
     /**
-     * The functions looks for intersection points between a basic or a
+     * The function looks for intersection points between a basic or a
     * composite geometry and a given ray. The function returns null if there are no
     * intersections
     * @param ray the ray to intersect a geometry/geometries
