@@ -148,6 +148,7 @@ public class Camera implements Cloneable {
             } catch (CloneNotSupportedException ignore) {
                 return null;
             }
+
         }
     }
 
