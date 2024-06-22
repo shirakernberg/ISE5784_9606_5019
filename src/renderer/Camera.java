@@ -1,9 +1,10 @@
 package renderer;
 
+import primitives.Color;
 import primitives.Point;
-import primitives.Vector;
 import primitives.Ray;
-
+import primitives.Vector;
+import scene.Scene;
 import java.util.MissingResourceException;
 
 import static primitives.Util.alignZero;
@@ -15,14 +16,17 @@ import static primitives.Util.isZero;
  */
 public class Camera implements Cloneable {
     // Camera fields
-    // Location of the camera
     private Point location;
-    // Direction vectors
     private Vector to, up, right;
-    // View plane dimensions
     private double vpWidth = 0.0;
     private double vpHeight = 0.0;
     private double vpDistance = 0.0;
+
+    // Image writer for creating the image file by the camera
+    private ImageWriter imageWriter;
+
+    // Ray tracer for casting the rays from the camera
+    private RayTracerBase rayTracer;
 
     // Private constructor for the Builder to use
     private Camera() {}
@@ -47,15 +51,6 @@ public class Camera implements Cloneable {
          */
         public Builder() {
             this.camera = new Camera();
-        }
-
-        /**
-         * Constructor for Builder initializes a new Camera instance.
-         *
-         * @param camera Camera instance to copy.
-         */
-        public Builder(Camera camera) {
-            this.camera = camera;
         }
 
         /**
@@ -115,10 +110,30 @@ public class Camera implements Cloneable {
         }
 
         /**
+         * Sets the image writer for the camera.
+         * @param imageWriter the image writer
+         * @return The current Builder instance.
+         */
+        public Builder setImageWriter(ImageWriter imageWriter) {
+            this.camera.imageWriter = imageWriter;
+            return this;
+        }
+
+        /**
+         * Sets the ray tracer for the camera.
+         * @param rayTracer the ray tracer
+         * @return The current Builder instance.
+         */
+        public Builder setRayTracer(RayTracerBase rayTracer) {
+            this.camera.rayTracer = rayTracer;
+            return this;
+        }
+
+        /**
          * Builds and returns the Camera instance.
          * @return The constructed Camera instance.
          */
-        public Camera build()  {
+        public Camera build() {
             // Check for missing fields
             if (this.camera.location == null) {
                 throw new MissingResourceException("Missing required parameter: location", Camera.class.getName(), "location");
@@ -129,6 +144,10 @@ public class Camera implements Cloneable {
             if (this.camera.up == null) {
                 throw new MissingResourceException("Missing required parameter: up", Camera.class.getName(), "up");
             }
+            if (camera.imageWriter == null)
+                throw new MissingResourceException("Missing required parameter: image writer", Camera.class.getName(), "image writer");
+            if (camera.rayTracer == null)
+                throw new MissingResourceException("Missing required parameter: ray tracer", Camera.class.getName(), "ray tracer");
 
             // Ensure view plane width and height are set
             if (this.camera.vpWidth == 0 || this.camera.vpHeight == 0) {
@@ -145,8 +164,6 @@ public class Camera implements Cloneable {
             } catch (CloneNotSupportedException ignore) {
                 return null;
             }
-
-
         }
     }
 
@@ -158,7 +175,7 @@ public class Camera implements Cloneable {
      * @param i Row index of the pixel.
      * @return The constructed ray.
      */
-    public Ray constructRay(int nX, int nY, int j, int i)  {
+    public Ray constructRay(int nX, int nY, int j, int i) {
         // Compute the center of the view plane
         Point pc = location.add(to.scale(vpDistance));
         // Pixel size
@@ -176,35 +193,60 @@ public class Camera implements Cloneable {
         return new Ray(location, vij);
     }
 
-    // Getter and Setter methods for all fields
+    /**
+     * This function renders image's pixel color map from the scene included in the ray tracer object.
+     * @return the camera object itself
+     */
+    public Camera renderImage() {
+        final int nX = imageWriter.getNx();
+        final int nY = imageWriter.getNy();
 
-    public Point getLocation() {
-        return location;
+        for (int i = 0; i < nY; ++i) {
+            for (int j = 0; j < nX; ++j) {
+                castRay(nX, nY, j, i);
+            }
+        }
+        return this;
     }
 
-    public Vector getTo() {
-        return to;
+    /**
+     * Create a grid [over the picture] in the pixel color map. Given the grid's step and color.
+     * @param step grid's step
+     * @param color grid's color
+     * @return the camera object itself
+     */
+    public Camera printGrid(int step, Color color) {
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+
+        for (int i = 0; i < nY; ++i) {
+            for (int j = 0; j < nX; ++j) {
+                if (j % step == 0 || i % step == 0) {
+                    imageWriter.writePixel(j, i, color);
+                }
+            }
+        }
+        return this;
     }
 
-    public Vector getUp() {
-        return up;
+    /**
+     * Produce a rendered image file.
+     * @return the camera object itself
+     */
+    public Camera writeToImage() {
+        imageWriter.writeToImage();
+        return this;
     }
 
-    public Vector getRight() {
-        return right;
-    }
-
-    public double getVpWidth() {
-        return vpWidth;
-    }
-
-    public double getVpHeight() {
-        return vpHeight;
-    }
-
-    public double getVpDistance() {
-        return vpDistance;
+    /**
+     * Cast ray from camera in order to color a pixel.
+     * @param nX  resolution on X axis (number of pixels in row)
+     * @param nY  resolution on Y axis (number of pixels in column)
+     * @param col pixel's column number (pixel index in row)
+     * @param row pixel's row number (pixel index in column)
+     */
+    private void castRay(int nX, int nY, int col, int row) {
+        imageWriter.writePixel(col, row, rayTracer.traceRay(constructRay(nX, nY, col, row)));
     }
 
 }
-

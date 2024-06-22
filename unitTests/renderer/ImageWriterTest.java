@@ -17,7 +17,7 @@ public class ImageWriterTest {
      */
     @Test
     public void simpleGridTest() {
-        ImageWriter imageWriter = new ImageWriter("imageWriterTest", 800, 500);
+        ImageWriter imageWriter = new ImageWriter("imageWriterTesting", 800, 500);
 
         int nX = imageWriter.getNx();   //800
         int nY = imageWriter.getNy();   //500
