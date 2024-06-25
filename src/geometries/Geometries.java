@@ -6,14 +6,14 @@ import java.util.List;
 import primitives.Point;
 import primitives.Ray;
 
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
     //list of geometries
     private LinkedList<Intersectable> geometriesList = null;
 
     /**
      * Default constructor.
      */
-    public Geometries() {///////////////////
+    public Geometries() {
 
     }
 

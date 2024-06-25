@@ -90,12 +90,12 @@ public class Tube extends RadialGeometry {
                 c = -1 * radius*radius;
             }
 
-            double descrimimamt=b*b-4*a*c;
+            double discriminant=b*b-4*a*c;
 
-            if(Util.alignZero(descrimimamt)<=0)
+            if(Util.alignZero(discriminant)<=0)
                 return null;
-            double t1=(-1*b+Math.sqrt(descrimimamt))/(2*a);
-            double t2=(-1*b-Math.sqrt(descrimimamt))/(2*a);
+            double t1=(-1*b+Math.sqrt(discriminant))/(2*a);
+            double t2=(-1*b-Math.sqrt(discriminant))/(2*a);
 
             if(t1==t2)
                 if(Util.alignZero(t1)>0)
@@ -103,8 +103,8 @@ public class Tube extends RadialGeometry {
                 else
                     return null;
             else  if (t1 > 0 && t2 > 0) {
-                Point p1=ray.getPoint((-1*b+Math.sqrt(descrimimamt))/(2*a));
-                Point p2=ray.getPoint((-1*b-Math.sqrt(descrimimamt))/(2*a));
+                Point p1=ray.getPoint((-1*b+Math.sqrt(discriminant))/(2*a));
+                Point p2=ray.getPoint((-1*b-Math.sqrt(discriminant))/(2*a));
                 return p1.getX()<p2.getX()?List.of(p1,p2):List.of(p2,p1);}
             if (Util.alignZero(t1) > 0) return List.of(ray.getPoint(t1));
             if (Util.alignZero(t2)>0) return List.of(ray.getPoint(t2));
