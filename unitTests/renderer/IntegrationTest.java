@@ -12,8 +12,6 @@ import scene.Scene;
 /***
  * integration testing camera&ray through barriers
  *
- * @author Ayala and Tamar
- *
  */
 class IntegrationTest {
     private Camera.Builder cameraBuilder = Camera.getBuilder()
