@@ -1,4 +1,3 @@
-
 package xmlParser;
 
 import java.io.File;
@@ -15,8 +14,17 @@ import geometries.Triangle;
 import primitives.Point;
 import scene.Scene;
 
+/**
+ * A utility class to parse XML files and load scene objects from them.
+ */
 public class SceneXMLParser {
 
+    /**
+     * Loads a scene from an XML file.
+     *
+     * @param filePath the path to the XML file
+     * @return the Scene object created from the XML file
+     */
     public static Scene loadSceneFromFile(String filePath) {
         try {
             File inputFile = new File(filePath);
@@ -68,11 +76,23 @@ public class SceneXMLParser {
         }
     }
 
+    /**
+     * Parses a color from a string.
+     *
+     * @param colorStr the string representing the color in the format "r g b"
+     * @return the Color object
+     */
     private static Color parseColor(String colorStr) {
         String[] rgb = colorStr.split(" ");
         return new Color(Double.parseDouble(rgb[0]), Double.parseDouble(rgb[1]), Double.parseDouble(rgb[2]));
     }
 
+    /**
+     * Parses a point from a string.
+     *
+     * @param pointStr the string representing the point in the format "x y z"
+     * @return the Point object
+     */
     private static Point parsePoint(String pointStr) {
         String[] coords = pointStr.split(" ");
         return new Point(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), Double.parseDouble(coords[2]));
