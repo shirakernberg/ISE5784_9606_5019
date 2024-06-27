@@ -20,8 +20,7 @@ public class Triangle extends Polygon {
     public Triangle(Point p1, Point p2, Point p3) {
         super(p1, p2, p3);
     }
-    public List<Point> findIntersections(Ray ray)
-    {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         //directions between the head of the ray and the vertices of the triangle
         Vector v1 = vertices.get(0).subtract(ray.getHead());
         Vector v2 = vertices.get(1).subtract(ray.getHead());
@@ -52,7 +51,7 @@ public class Triangle extends Polygon {
             }
 
             //arrange the intersection points by the distance from the head of the ray
-            return List.of(planeIntersections.getFirst());
+            return List.of(new GeoPoint(this,planeIntersections.getFirst()));
         }
         return null;
     }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import geometries.*;
 import primitives.*;
 import renderer.*;
+import scene.Scene;
 
 /***
  * integration testing camera&ray through barriers
@@ -16,6 +17,8 @@ import renderer.*;
  */
 class IntegrationTest {
     private Camera.Builder cameraBuilder = Camera.getBuilder()
+            .setRayTracer(new SimpleRayTracer(new Scene("Test")))
+            .setImageWriter(new ImageWriter("Test", 1, 1))
             .setLocation(new Point(0,0,0))
             .setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVpDistance(1);

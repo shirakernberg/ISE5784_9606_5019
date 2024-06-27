@@ -9,6 +9,8 @@ import lighting.AmbientLight;
 import primitives.*;
 import renderer.*;
 import scene.Scene;
+import xmlParser.SceneXMLParser;
+
 
 /** Test rendering a basic image
  * @author Dan */
@@ -72,20 +74,17 @@ public class RenderTests {
                 .writeToImage();
     }
 
-    /** Test for XML based scene - for bonus */
+    //Test for XML based scene - for bonus
     @Test
-    public void basicRenderXml() {
-        // enter XML file name and parse from XML file into scene object
-        // using the code you added in appropriate packages
-        // ...
-        // NB: unit tests is not the correct place to put XML parsing code
-
-        camera
-                .setImageWriter(new ImageWriter("xml render test", 1000, 1000))
-                .build()
-                .renderImage()
-                .printGrid(100, new Color(YELLOW))
-                .writeToImage();
-    }
+     public void basicRenderXml() {
+     Scene xmlScene = SceneXMLParser.loadSceneFromFile("C:/Users/shiraa/IdeaProjects/ISE5784_9606_5019/images/renderTestTwoColors.xml");
+     camera
+     .setRayTracer(new SimpleRayTracer(xmlScene))
+     .setImageWriter(new ImageWriter("xml render test", 1000, 1000))
+     .build()
+     .renderImage()
+     .printGrid(100, new Color(YELLOW))
+     .writeToImage();
+     }
 }
 

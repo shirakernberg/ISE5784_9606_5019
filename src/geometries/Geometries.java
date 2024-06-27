@@ -8,7 +8,7 @@ import primitives.Ray;
 
 public class Geometries extends Intersectable {
     //list of geometries
-    private LinkedList<Intersectable> geometriesList = null;
+    private LinkedList<Intersectable> geometriesList = new LinkedList<>();
 
     /**
      * Default constructor.
@@ -52,12 +52,12 @@ public class Geometries extends Intersectable {
      * @return a list of intersection points with the geometries
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> intersections = null;
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
+        List<GeoPoint> intersections = null;
 
         // Iterate over each geometry and find intersections
         for (Intersectable geometry : geometriesList) {
-            List<Point> tempIntersections = geometry.findIntersections(ray);
+            List<GeoPoint> tempIntersections = geometry.findGeoIntersectionsHelper(ray);
             if (tempIntersections != null) {
                 if (intersections == null) {
                     intersections = new LinkedList<>();
@@ -68,7 +68,6 @@ public class Geometries extends Intersectable {
 
         // Return null if no intersections found, otherwise return the list of intersections
         return intersections == null ? null : intersections;
-
     }
 
 }

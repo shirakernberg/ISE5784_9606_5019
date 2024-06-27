@@ -86,16 +86,15 @@ public class Polygon extends Geometry {
 
    /**
     * @param ray of polygon
-    * @return list ofpoints
+    * @return list of points
     */
-   @Override
-   public List<Point> findIntersections(Ray ray) {
-      List<Point> intersectionPoints = plane.findIntersections(ray);
+      protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
+      List<GeoPoint> intersectionPoints = plane.findGeoIntersectionsHelper(ray);
       if (intersectionPoints == null) {
          return null;
       }
       // if there is a potential point to check
-      Point intersectionPoint = intersectionPoints.getFirst();
+      GeoPoint intersectionPoint = intersectionPoints.getFirst();
 
       // check if the intersection point is within the polygon
       int counter = 0;
@@ -105,7 +104,7 @@ public class Polygon extends Geometry {
          Vector edge = vertex2.subtract(vertex1);
          Vector normal = null;
          try {
-            normal = edge.crossProduct(intersectionPoint.subtract(vertex1)).normalize();
+            normal = edge.crossProduct(intersectionPoint.point.subtract(vertex1)).normalize();
 
          } catch (Exception e) {
 

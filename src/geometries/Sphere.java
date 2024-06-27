@@ -49,7 +49,7 @@ public class Sphere extends RadialGeometry {
      * @param ray the ray to find intersections with
      * @return a list of intersection points with the sphere
      */
-    public List<Point> findIntersections(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Vector u;
         //if the ray starts at the center of the sphere
         try {
@@ -70,14 +70,14 @@ public class Sphere extends RadialGeometry {
 
         //if there are 2 intersection points
         if(t1 > 0 && t2 > 0) {
-            return List.of(ray.getPoint(t1),ray.getPoint(t2));
+            return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint(this,ray.getPoint(t2)));
         }
         //if there is only 1 intersection point
         else if(t1 > 0) {
-            return List.of(ray.getPoint(t1));
+            return List.of(new GeoPoint(this,ray.getPoint(t1)));
         }
         else if(t2 > 0) {
-            return List.of(ray.getPoint(t2));
+            return List.of(new GeoPoint(this,ray.getPoint(t2)));
         }
 
         //no intersection points
