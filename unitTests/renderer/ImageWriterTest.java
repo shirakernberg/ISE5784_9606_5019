@@ -24,7 +24,7 @@ public class ImageWriterTest {
 
         int interval = 50;
 
-        Color colorYellow = new Color(GREEN); // yellow
+        Color colorYellow = new Color(YELLOW); // yellow
         Color colorRed = new Color(RED); // red
 
         for (int i = 0; i < nY; ++i) {

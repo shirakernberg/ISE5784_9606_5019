@@ -35,10 +35,8 @@ public class Geometries extends Intersectable {
     public void add(Intersectable... geometries)
     {
         if(geometriesList == null)
-        {
             geometriesList = new LinkedList<Intersectable>();
-            return;
-        }
+
         for(Intersectable geometry : geometries)
         {
             geometriesList.add(geometry);
