@@ -8,7 +8,7 @@ import primitives.Ray;
 
 public class Geometries extends Intersectable {
     //list of geometries
-    private LinkedList<Intersectable> geometriesList = null;
+    private LinkedList<Intersectable> geometriesList = new LinkedList<>();
 
     /**
      * Default constructor.

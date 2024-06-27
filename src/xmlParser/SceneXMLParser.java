@@ -1,19 +1,12 @@
+
 package xmlParser;
 
 import java.io.File;
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import lighting.AmbientLight;
 import primitives.Color;
 import geometries.Geometries;
@@ -48,26 +41,23 @@ public class SceneXMLParser {
 
             // Parse geometries
             Geometries geometries = new Geometries();
-            NodeList geometriesList = doc.getElementsByTagName("geometries").item(0).getChildNodes();
-            for (int i = 0; i < geometriesList.getLength(); i++) {
-                Node node = geometriesList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element geometryElement = (Element) node;
-                    switch (geometryElement.getTagName()) {
-                        case "sphere":
-                            Point center = parsePoint(geometryElement.getAttribute("center"));
-                            double radius = Double.parseDouble(geometryElement.getAttribute("radius"));
-                            geometries.add(new Sphere(center, radius));
-                            break;
-                        case "triangle":
-                            Point p0 = parsePoint(geometryElement.getAttribute("p0"));
-                            Point p1 = parsePoint(geometryElement.getAttribute("p1"));
-                            Point p2 = parsePoint(geometryElement.getAttribute("p2"));
-                            geometries.add(new Triangle(p0, p1, p2));
-                            break;
-                    }
-                }
+            NodeList spheresList = doc.getElementsByTagName("sphere");
+            for (int i = 0; i < spheresList.getLength(); i++) {
+                Element sphereElement = (Element) spheresList.item(i);
+                Point center = parsePoint(sphereElement.getAttribute("center"));
+                double radius = Double.parseDouble(sphereElement.getAttribute("radius"));
+                geometries.add(new Sphere(center, radius));
             }
+
+            NodeList trianglesList = doc.getElementsByTagName("triangle");
+            for (int i = 0; i < trianglesList.getLength(); i++) {
+                Element triangleElement = (Element) trianglesList.item(i);
+                Point p0 = parsePoint(triangleElement.getAttribute("p0"));
+                Point p1 = parsePoint(triangleElement.getAttribute("p1"));
+                Point p2 = parsePoint(triangleElement.getAttribute("p2"));
+                geometries.add(new Triangle(p0, p1, p2));
+            }
+
             scene.setGeometries(geometries);
 
             return scene;
