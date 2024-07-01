@@ -12,8 +12,10 @@ import scene.Scene;
 import xmlParser.SceneXMLParser;
 
 
-/** Test rendering a basic image
- * @author Dan */
+/**
+ * Test rendering a basic image
+ * @author Dan
+ */
 public class RenderTests {
     /** Scene of the tests */
     private final Scene          scene  = new Scene("Test scene");
@@ -23,9 +25,10 @@ public class RenderTests {
             .setLocation(Point.ZERO).setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVpDistance(100)
             .setVpSize(500, 500);
-
-    /** Produce a scene with basic 3D model and render it into a png image with a
-     * grid */
+    /**
+     * Produce a scene with basic 3D model and render it into a png image with a
+     * grid
+     */
     @Test
     public void renderTwoColorTest() {
         scene.geometries.add(new Sphere(new Point(0, 0, -100), 50d),
@@ -46,6 +49,7 @@ public class RenderTests {
                 .printGrid(100, new Color(YELLOW))
                 .writeToImage();
     }
+
     // For stage 6 - please disregard in stage 5
     /**
      * Produce a scene with basic 3D model - including individual lights of the
@@ -77,7 +81,7 @@ public class RenderTests {
     //Test for XML based scene - for bonus
     @Test
      public void basicRenderXml() {
-     Scene xmlScene = SceneXMLParser.loadSceneFromFile("C:/Users/shiraa/IdeaProjects/ISE5784_9606_5019/images/renderTestTwoColors.xml");
+     Scene xmlScene = SceneXMLParser.loadSceneFromFile("C://Users//A//IntellijProjects//ISE5784_9606_5019//images//renderTestTwoColors.xml");
      camera
      .setRayTracer(new SimpleRayTracer(xmlScene))
      .setImageWriter(new ImageWriter("xml render test", 1000, 1000))
