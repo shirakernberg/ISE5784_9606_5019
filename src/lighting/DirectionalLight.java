@@ -12,40 +12,29 @@ public class DirectionalLight extends Light implements LightSource {
 
     /**
      * Constructor for DirectionalLight.
-     * @param builder the builder object containing the parameters
+     * @param intensity the intensity of the light
+     * @param direction the direction of the light
      */
-    private DirectionalLight(Builder builder) {
-        super(builder.intensity);
-        this.direction = builder.direction;
+    public DirectionalLight(Color intensity, Vector direction) {
+        super(intensity);
+        this.direction = direction.normalize();
     }
 
     /**
-     * Builder class for DirectionalLight.
+     * Get the intensity of the light at a point.
+     * @param p the point
+     * @return the intensity of the light
      */
-    public static class Builder {
-        private final Color intensity;
-        private final Vector direction;
-
-        /**
-         * Constructor for Builder.
-         * @param intensity the intensity of the light
-         * @param direction the direction of the light
-         */
-        public Builder(Color intensity, Vector direction) {
-            this.intensity = intensity;
-            this.direction = direction.normalize();
-        }
-
-        public DirectionalLight build() {
-            return new DirectionalLight(this);
-        }
-    }
-
     @Override
     public Color getIntensity(Point p) {
         return getIntensity();
     }
 
+    /**
+     * Get the direction of the light at a point.
+     * @param p the point
+     * @return the direction of the light
+     */
     @Override
     public Vector getL(Point p) {
         return direction;

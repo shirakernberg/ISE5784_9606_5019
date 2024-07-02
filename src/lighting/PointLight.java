@@ -15,63 +15,51 @@ public class PointLight extends Light implements LightSource {
 
     /**
      * Constructor for PointLight.
-     * @param builder the builder object containing the parameters
+     * @param intensity the intensity of the light
+     * @param position the position of the light
      */
-    PointLight(Builder builder) {
-        super(builder.intensity);
-        this.position = builder.position;
-        this.kC = builder.kC;
-        this.kL = builder.kL;
-        this.kQ = builder.kQ;
+    public PointLight(Color intensity, Point position) {
+        super(intensity);
+        this.position = position;
     }
 
     /**
-     * Builder class for PointLight.
+     * Setter for the linear attenuation factor.
+     * @param kL the linear attenuation factor
+     * @return the current instance (for chaining)
      */
-    public static class Builder {
-        private final Color intensity;
-        private final Point position;
-        private double kC = 1.0;
-        private double kL = 0.0;
-        private double kQ = 0.0;
-
-        /**
-         * Constructor for Builder.
-         * @param intensity the intensity of the light
-         * @param position the position of the light
-         */
-        public Builder(Color intensity, Point position) {
-            this.intensity = intensity;
-            this.position = position;
-        }
-
-        public Builder setKC(double kC) {
-            this.kC = kC;
-            return this;
-        }
-
-        public Builder setKL(double kL) {
-            this.kL = kL;
-            return this;
-        }
-
-        public Builder setKQ(double kQ) {
-            this.kQ = kQ;
-            return this;
-        }
-
-        public PointLight build() {
-            return new PointLight(this);
-        }
+    public PointLight setKl(double kL) {
+        this.kL = kL;
+        return this;
     }
 
+    /**
+     * Setter for the quadratic attenuation factor.
+     * @param kQ the quadratic attenuation factor
+     * @return the current instance (for chaining)
+     */
+    public PointLight setKq(double kQ) {
+        this.kQ = kQ;
+        return this;
+    }
+
+    /**
+     * Get the intensity of the light at a point.
+     * @param p the point
+     * @return the intensity of the light
+     */
     @Override
     public Color getIntensity(Point p) {
         double d = position.distance(p);
         double attenuation = kC + kL * d + kQ * d * d;
-        return getIntensity().reduce((int) attenuation);
+        return getIntensity().reduce(attenuation);
     }
 
+    /**
+     * Get the direction of the light at a point.
+     * @param p the point
+     * @return the direction of the light
+     */
     @Override
     public Vector getL(Point p) {
         return p.subtract(position).normalize();

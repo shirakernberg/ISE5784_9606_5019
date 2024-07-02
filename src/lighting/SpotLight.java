@@ -12,36 +12,20 @@ public class SpotLight extends PointLight {
 
     /**
      * Constructor for SpotLight.
-     * @param builder the builder object containing the parameters
+     * @param intensity the intensity of the light
+     * @param position the position of the light
+     * @param direction the direction of the light
      */
-    private SpotLight(Builder builder) {
-        super(builder);
-        this.direction = builder.direction.normalize();
+    public SpotLight(Color intensity, Point position, Vector direction) {
+        super(intensity, position);
+        this.direction = direction.normalize();
     }
 
     /**
-     * Builder class for SpotLight.
+     * Get the intensity of the light at a point.
+     * @param p the point
+     * @return the intensity of the light
      */
-    public static class Builder extends PointLight.Builder {
-        private final Vector direction;
-
-        /**
-         * Constructor for Builder.
-         * @param intensity the intensity of the light
-         * @param position the position of the light
-         * @param direction the direction of the light
-         */
-        public Builder(Color intensity, Point position, Vector direction) {
-            super(intensity, position);
-            this.direction = direction;
-        }
-
-        @Override
-        public SpotLight build() {
-            return new SpotLight(this);
-        }
-    }
-
     @Override
     public Color getIntensity(Point p) {
         Color pointIntensity = super.getIntensity(p);
@@ -49,6 +33,11 @@ public class SpotLight extends PointLight {
         return pointIntensity.scale(Math.max(0, projection));
     }
 
+    /**
+     * Get the direction of the light at a point.
+     * @param p the point
+     * @return the direction of the light
+     */
     @Override
     public Vector getL(Point p) {
         return super.getL(p);
