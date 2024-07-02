@@ -15,6 +15,7 @@ import primitives.Color;
  * responsible of holding image related parameters of View Plane - pixel matrix
  * size and resolution
  * @author Dan */
+
 public class ImageWriter {
     /** Horizontal resolution of the image - number of pixels in row */
     private int                 nX;

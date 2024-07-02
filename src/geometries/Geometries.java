@@ -5,7 +5,10 @@ import java.util.List;
 
 import primitives.Point;
 import primitives.Ray;
-
+/**
+ * This class represents a collection of geometries in 3D space.
+ * It extends the Intersectable class.
+ */
 public class Geometries extends Intersectable {
     //list of geometries
     private LinkedList<Intersectable> geometriesList = new LinkedList<>();

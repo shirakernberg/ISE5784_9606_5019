@@ -5,7 +5,10 @@ import primitives.Ray;
 
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * This class represents a collection of geometries in 3D space.
+ * It extends the Intersectable class.
+ */
 public abstract class Intersectable {
 
 
