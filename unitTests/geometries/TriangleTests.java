@@ -29,23 +29,23 @@ class TriangleTests {
         // TC01:Ray inside triangle (1 point)
         var result = triangle.findIntersections(new Ray(new Point(-1, 8, -5), new Vector(1, -7, 5)));
         assertEquals(1, result.size(), "Wrong number of points");
-       assertEquals(List.of(new Point(0, 1, 0)), result, "Ray intersects the triangle");
+        assertEquals(List.of(new Point(0, 1, 0)), result, "Ray intersects the triangle");
 
         //TC02:Ray outside against edge (0 points)
-       assertNull(triangle.findIntersections(new Ray(new Point(-3, -3, -1), new Vector(1, 5, 1))), "Ray not included in the triangle");
+        assertNull(triangle.findIntersections(new Ray(new Point(-3, -3, -1), new Vector(1, 5, 1))), "Ray not included in the triangle");
 
         //TC03:Ray outside against vertex (0 points)
         assertNull(triangle.findIntersections(new Ray(new Point(-3, -3, -1), new Vector(1, 2, 1))), "Ray not included in the triangle");
         // =============== Boundary Values Tests ==================
 
         //TC11:Ray on edge (0 points)
-       assertNull(triangle.findIntersections(new Ray(new Point(-2, -3, -1), new Vector(1, 4, 1))), "Ray not included in the triangle");
+        assertNull(triangle.findIntersections(new Ray(new Point(-2, -3, -1), new Vector(1, 4, 1))), "Ray not included in the triangle");
 
         //TC12:Ray in vertex (0 points)
-       assertNull(triangle.findIntersections(new Ray(new Point(-2, -3, -1), new Vector(1, 6, 1))), "Ray not included in the triangle");
+        assertNull(triangle.findIntersections(new Ray(new Point(-2, -3, -1), new Vector(1, 6, 1))), "Ray not included in the triangle");
 
         //TC13: Ray on edge's continuation (0 points)
-       assertNull(triangle.findIntersections(new Ray(new Point(-2, -3, -1), new Vector(-1, 8, 1))), "Ray not included in the triangle");
+        assertNull(triangle.findIntersections(new Ray(new Point(-2, -3, -1), new Vector(-1, 8, 1))), "Ray not included in the triangle");
     }
 }
 

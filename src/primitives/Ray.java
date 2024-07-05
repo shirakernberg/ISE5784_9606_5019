@@ -30,6 +30,21 @@ public class Ray {
     }
 
     /**
+     * Constructor to initialize a Ray object with a given head point, direction vector and normal vector.
+     * The direction vector is normalized.
+     * @param head the starting point of the ray
+     * @param direction the direction vector of the ray
+     * @param n the normal vector
+     */
+    public Ray(Point head, Vector direction, Vector n) {
+        this.direction = direction.normalize();
+        double nDir = this.direction.dotProduct(n);
+        this.head = isZero(nDir) ? head :
+                nDir > 0 ? head.add(n.scale(0.1)) : head.add(n.scale(-0.1));
+    }
+
+
+    /**
      * @param t the distance
      * @return the ray points from a given distance
      */

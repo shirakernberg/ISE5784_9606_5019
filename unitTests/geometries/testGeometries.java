@@ -22,7 +22,7 @@ class GeometriesTest {
 
         // TC01: Empty geometry list (0 points)
         assertNull(geometries.findIntersections(new Ray(new Point(1, 1, 1), new Vector(2, 1, 1))),
-               "Empty geometries - should return null");
+                "Empty geometries - should return null");
 
         geometries.add(new Sphere(new Point(1, 0, 0), 1.0));
         geometries.add(new Plane(new Point(1, 1, 0), new Vector(0, 0, 1)));

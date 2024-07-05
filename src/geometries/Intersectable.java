@@ -14,11 +14,11 @@ public abstract class Intersectable {
 
     /**
      * The function looks for intersection points between a basic or a
-    * composite geometry and a given ray. The function returns null if there are no
-    * intersections
-    * @param ray the ray to intersect a geometry/geometries
-    * @return list of intersection points
-    */
+     * composite geometry and a given ray. The function returns null if there are no
+     * intersections
+     * @param ray the ray to intersect a geometry/geometries
+     * @return list of intersection points
+     */
     public List<Point> findIntersections(Ray ray) {
         var geoList = findGeoIntersections(ray);
         return geoList == null ? null : geoList.stream().map(gp -> gp.point).toList();
@@ -61,9 +61,9 @@ public abstract class Intersectable {
                     '}';
         }
     }
-        public List<GeoPoint> findGeoIntersections(Ray ray){
-            return findGeoIntersectionsHelper(ray);
-        }
+    public List<GeoPoint> findGeoIntersections(Ray ray){
+        return findGeoIntersectionsHelper(ray);
+    }
 
-        protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
 }

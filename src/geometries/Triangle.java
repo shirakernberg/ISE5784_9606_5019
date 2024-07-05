@@ -42,7 +42,7 @@ public class Triangle extends Polygon {
             return null;
         //if the dot products are all positive or all negative then the ray intersects the triangle
         if(t1 >0 && t2 > 0 && t3 > 0 || t1<0 && t2 < 0 && t3 < 0) {
-             Plane p = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));
+            Plane p = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));
             List<Point> planeIntersections = p.findIntersections(ray);
 
             //if there are no intersections with the plane

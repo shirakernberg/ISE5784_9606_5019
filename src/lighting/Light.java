@@ -5,7 +5,7 @@ import primitives.Color;
 /**
  * Abstract class for different types of light sources in the scene.
  */
- abstract class Light {
+abstract class Light {
     /**
      * The intensity of the light source.
      */

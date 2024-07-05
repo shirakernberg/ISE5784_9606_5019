@@ -130,6 +130,76 @@ public class Camera implements Cloneable {
         }
 
         /**
+         * Translate the camera by a vector.
+         * @param translation Vector for translation.
+         * @return The current Builder instance.
+         */
+        public Builder translate(Vector translation) {
+            if (translation == null) {
+                throw new IllegalArgumentException("Translation vector cannot be null");
+            }
+            this.camera.location = this.camera.location.add(translation);
+            return this;
+        }
+
+        /**
+         * Rotate the camera around the X-axis.
+         * @param angle Angle in radians.
+         * @return The current Builder instance.
+         */
+        public Builder rotateX(double angle) {
+            double cosAngle = Math.cos(angle);
+            double sinAngle = Math.sin(angle);
+
+            Vector newUp = this.camera.up.scale(cosAngle).add(this.camera.to.scale(sinAngle));
+            Vector newTo = this.camera.to.scale(cosAngle).subtract(this.camera.up.scale(sinAngle));
+
+            this.camera.up = newUp.normalize();
+            this.camera.to = newTo.normalize();
+            this.camera.right = this.camera.to.crossProduct(this.camera.up).normalize();
+
+            return this;
+        }
+
+        /**
+         * Rotate the camera around the Y-axis.
+         * @param angle Angle in radians.
+         * @return The current Builder instance.
+         */
+        public Builder rotateY(double angle) {
+            double cosAngle = Math.cos(angle);
+            double sinAngle = Math.sin(angle);
+
+            Vector newTo = this.camera.to.scale(cosAngle).add(this.camera.right.scale(sinAngle));
+            Vector newRight = this.camera.right.scale(cosAngle).subtract(this.camera.to.scale(sinAngle));
+
+            this.camera.to = newTo.normalize();
+            this.camera.right = newRight.normalize();
+            this.camera.up = this.camera.right.crossProduct(this.camera.to).normalize();
+
+            return this;
+        }
+
+        /**
+         * Rotate the camera around the Z-axis.
+         * @param angle Angle in radians.
+         * @return The current Builder instance.
+         */
+        public Builder rotateZ(double angle) {
+            double cosAngle = Math.cos(angle);
+            double sinAngle = Math.sin(angle);
+
+            Vector newRight = this.camera.right.scale(cosAngle).add(this.camera.up.scale(sinAngle));
+            Vector newUp = this.camera.up.scale(cosAngle).subtract(this.camera.right.scale(sinAngle));
+
+            this.camera.right = newRight.normalize();
+            this.camera.up = newUp.normalize();
+            this.camera.to = this.camera.right.crossProduct(this.camera.up).normalize();
+
+            return this;
+        }
+
+        /**
          * Builds and returns the Camera instance.
          * @return The constructed Camera instance.
          */
@@ -248,5 +318,4 @@ public class Camera implements Cloneable {
     private void castRay(int nX, int nY, int col, int row) {
         imageWriter.writePixel(col, row, rayTracer.traceRay(constructRay(nX, nY, col, row)));
     }
-
 }

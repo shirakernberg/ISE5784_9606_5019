@@ -88,7 +88,7 @@ public class Polygon extends Geometry {
     * @param ray of polygon
     * @return list of points
     */
-      protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
+   protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
       List<GeoPoint> intersectionPoints = plane.findGeoIntersectionsHelper(ray);
       if (intersectionPoints == null) {
          return null;
