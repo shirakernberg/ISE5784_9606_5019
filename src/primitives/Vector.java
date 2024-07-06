@@ -15,7 +15,7 @@ public class Vector extends Point {
 
     /**
      * one double3 parameter ctor for vector
-     * @param xyz=the double3 value of the vector xtz
+     * @param xyz=the double3 value of the vector
      */
     Vector(Double3 xyz) {
         super(xyz);
@@ -68,25 +68,25 @@ public class Vector extends Point {
      * @return the resulting vector
      */
     public Vector crossProduct(Vector v) {
-    return new Vector(
-            xyz.d2 * v.xyz.d3 - xyz.d3 * v.xyz.d2,
-            xyz.d3*v.xyz.d1-xyz.d1*v.xyz.d3,
-            xyz.d1*v.xyz.d2-xyz.d2*v.xyz.d1);
+        return new Vector(
+                xyz.d2 * v.xyz.d3 - xyz.d3 * v.xyz.d2,
+                xyz.d3 * v.xyz.d1 - xyz.d1 * v.xyz.d3,
+                xyz.d1 * v.xyz.d2 - xyz.d2 * v.xyz.d1);
     }
 
     /**
      * calculates the length squared
      * @return the squared length
      */
-    public double lengthSquared(){
-        return xyz.d1*xyz.d1 + xyz.d2*xyz.d2+xyz.d3*xyz.d3;
+    public double lengthSquared() {
+        return xyz.d1 * xyz.d1 + xyz.d2 * xyz.d2 + xyz.d3 * xyz.d3;
     }
 
     /**
-     * applies a squared rooytyo the length
-     * @return the length after th root
+     * applies a squared root to the length
+     * @return the length after the root
      */
-    public double length(){
+    public double length() {
         return Math.sqrt(lengthSquared());
     }
 
@@ -98,6 +98,6 @@ public class Vector extends Point {
         double len = alignZero(length());
         if (len == 0)
             throw new ArithmeticException("Cannot normalize Vector(0,0,0)");
-        return new Vector(xyz.d1/len, xyz.d2/len, xyz.d3/len);
+        return new Vector(xyz.d1 / len, xyz.d2 / len, xyz.d3 / len);
     }
 }

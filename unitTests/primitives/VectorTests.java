@@ -1,7 +1,6 @@
 package primitives;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class VectorTests {
@@ -22,39 +21,38 @@ class VectorTests {
     @Test
     void testLength() {
         // ============ Equivalence Partitions Tests ==============
-        assertEquals(0, v4.length() - 3,"ERROR: length() wrong value");
+        assertEquals(3, v4.length(),"ERROR: length() wrong value");
     }
 
     @Test
     void testLengthSquared() {
         // ============ Equivalence Partitions Tests ==============
-        assertEquals(0, v4.lengthSquared() - 9,"ERROR: lengthSquared() wrong value");
+        assertEquals(9, v4.lengthSquared(),"ERROR: lengthSquared() wrong value");
     }
 
     @Test
     void testAdd() {
         // ============ Equivalence Partitions Tests ==============
-        assertEquals(v1Opposite, v1.add(v2), "ERROR: Vector + Vector does not work correctly");
+        assertEquals(new Vector(-1, -2, -3), v1.add(v2), "ERROR: Vector + Vector does not work correctly");
 
         // =============== Boundary Values Tests ==================
         assertThrows(IllegalArgumentException.class, () -> v1.add(v1Opposite), "ERROR: Vector + -itself does not throw an exception");
     }
 
-
     @Test
     void testSubtract() {
         // ============ Equivalence Partitions Tests ==============
-        assertEquals(new Vector(3, 6, 9),v1.subtract(v2),  "ERROR: Vector + Vector does not work correctly");
+        assertEquals(new Vector(3, 6, 9), v1.subtract(v2), "ERROR: Vector - Vector does not work correctly");
 
         // =============== Boundary Values Tests ==================
-        assertThrows(IllegalArgumentException.class, () -> v1.subtract(v1), "ERROR: Vector + itself throws wrong exception" );
+        assertThrows(IllegalArgumentException.class, () -> v1.subtract(v1), "ERROR: Vector - itself throws wrong exception");
     }
 
     @Test
     void testDotProduct() {
         // ============ Equivalence Partitions Tests ==============
         assertEquals(0, v1.dotProduct(v3), "ERROR: dotProduct() for orthogonal vectors is not zero");
-        assertEquals(0, v1.dotProduct(v2) + 28, "ERROR: dotProduct() wrong value");
+        assertEquals(-28, v1.dotProduct(v2), "ERROR: dotProduct() wrong value");
     }
 
     @Test
@@ -64,9 +62,9 @@ class VectorTests {
 
         // ============ Equivalence Partitions Tests ==============
         Vector vr = v1.crossProduct(v3);
-        assertEquals(0, vr.length() - v1.length() * v3.length(),0.00001, "ERROR: crossProduct() wrong result length");
+        assertEquals(v1.length() * v3.length(), vr.length(), 0.00001, "ERROR: crossProduct() wrong result length");
         assertEquals(0, vr.dotProduct(v1), 1e-10, "ERROR: crossProduct() result is not orthogonal to its operands");
-        assertEquals(0, vr.dotProduct(v3), "ERROR: crossProduct() result is not orthogonal to its operands");
+        assertEquals(0, vr.dotProduct(v3), 1e-10, "ERROR: crossProduct() result is not orthogonal to its operands");
     }
 
     @Test
@@ -75,10 +73,10 @@ class VectorTests {
         Vector u = v.normalize();
 
         // ============ Equivalence Partitions Tests ==============
-        assertEquals(0, u.length() - 1, "ERROR: the normalized vector is not a unit vector");
+        assertEquals(1, u.length(), "ERROR: the normalized vector is not a unit vector");
 
         // =============== Boundary Values Tests ==================
         assertThrows(IllegalArgumentException.class, () -> v.crossProduct(u), "ERROR: the normalized vector is not parallel to the original one");
-        assertTrue(v1.dotProduct(u) > 0, "ERROR: the normalized vector is opposite to the original one");
+        assertTrue(v.dotProduct(u) > 0, "ERROR: the normalized vector is opposite to the original one");
     }
 }
