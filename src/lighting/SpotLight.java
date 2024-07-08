@@ -4,12 +4,14 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+import static primitives.Util.alignZero;
+
 /**
  * Class representing a spotlight source.
  */
 public class SpotLight extends PointLight {
     private final Vector direction;
-
+    public double narrowBeam;
     /**
      * Constructor for SpotLight.
      * @param intensity the intensity of the light
@@ -28,9 +30,10 @@ public class SpotLight extends PointLight {
      */
     @Override
     public Color getIntensity(Point p) {
-        Color pointIntensity = super.getIntensity(p);
-        double projection = direction.dotProduct(getL(p));
-        return pointIntensity.scale(Math.max(0, projection));
+        double cos = alignZero(direction.dotProduct(getL(p)));
+        return narrowBeam!= 1?
+                super.getIntensity(p).scale(Math.pow(Math.max(0,cos), narrowBeam)) :
+                super.getIntensity(p).scale(Math.max(0, cos));
     }
 
     /**
@@ -41,5 +44,16 @@ public class SpotLight extends PointLight {
     @Override
     public Vector getL(Point p) {
         return super.getL(p);
+    }
+
+
+    /**
+     * Get the distance from the light source to a specific point.
+     * @param narrowBeam the point to calculate the distance to
+     * return the distance to the specified point (infinity for directional light)
+     */
+    public SpotLight setNarrowBeam(double narrowBeam) {
+        this.narrowBeam = narrowBeam;
+        return this;
     }
 }

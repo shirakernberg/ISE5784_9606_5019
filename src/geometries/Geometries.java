@@ -14,7 +14,7 @@ public class Geometries extends Intersectable {
     private LinkedList<Intersectable> geometriesList = new LinkedList<>();
 
     /**
-     * Default constructor.
+     * Deשfault constructor.
      */
     public Geometries() {
 
