@@ -21,22 +21,47 @@ public class SimpleRayTracer extends RayTracerBase {
         super(scene);
     }
 
+    /**
+     *traces the ray to find the color of the closest point
+     * @param ray the ray to trace
+     * @return color of closest point
+     */
     @Override
     public Color traceRay(Ray ray) {
         GeoPoint closestPoint = findClosestIntersection(ray);
         return closestPoint == null ? scene.background : calcColor(closestPoint, ray);
     }
 
+    /**
+     * calculates the color of the intersection point
+     * @param geopoint intersection point
+     * @param ray intersecting ray
+     * @return color at intersection point
+     */
     private Color calcColor(GeoPoint geopoint, Ray ray) {
         return calcColor(geopoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K)
                 .add(scene.ambientLight.getIntensity());
     }
 
+    /**
+     * helper func to calcColor that executes the calculation
+     * @param intersection intersection point of ray and point
+     * @param ray intersecting ray
+     * @param level of recursion
+     * @param k trancperacy/reflection indicator
+     * @return color at intersection point
+     */
     private Color calcColor(GeoPoint intersection, Ray ray, int level, Double3 k) {
         Color color = calcLocalEffects(intersection, ray, k);
         return 1 == level ? color : color.add(calcGlobalEffects(intersection, ray, level, k));
     }
 
+    /**
+     * @param gp
+     * @param ray
+     * @param k
+     * @return
+     */
     private Color calcLocalEffects(GeoPoint gp, Ray ray, Double3 k) {
         Color color = gp.geometry.getEmission();
         Vector v = ray.getDirection();

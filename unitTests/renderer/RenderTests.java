@@ -81,7 +81,7 @@ public class RenderTests {
     //Test for XML based scene - for bonus
     @Test
      public void basicRenderXml() {
-     Scene xmlScene = SceneXMLParser.loadSceneFromFile("C://Users//A//IntellijProjects//ISE5784_9606_5019//images//renderTestTwoColors.xml");
+     Scene xmlScene = SceneXMLParser.loadSceneFromFile("C://Users//shiraa//IdeaProjects//ISE5784_9606_5019//images//renderTestTwoColors.xml");
      camera
      .setRayTracer(new SimpleRayTracer(xmlScene))
      .setImageWriter(new ImageWriter("xml render test", 1000, 1000))

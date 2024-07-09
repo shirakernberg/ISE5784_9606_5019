@@ -57,8 +57,6 @@ public abstract class Geometry extends Intersectable {
         return this;
     }
 
-
-
 }
 
 
