@@ -1,19 +1,13 @@
 package renderer;
 
-import geometries.Intersectable;
-import geometries.Sphere;
-import geometries.Triangle;
+import geometries.*;
 import lighting.AmbientLight;
 import lighting.SpotLight;
 import org.junit.jupiter.api.Test;
-import primitives.Color;
-import primitives.Material;
-import primitives.Point;
-import primitives.Vector;
+import primitives.*;
 import scene.Scene;
 
-import static java.awt.Color.BLUE;
-import static java.awt.Color.WHITE;
+import static java.awt.Color.*;
 
 public class level7Test {
     /** Scene of the tests */
@@ -21,13 +15,19 @@ public class level7Test {
     /** Camera builder of the tests */
     private final Camera.Builder camera     = Camera.getBuilder()
             .setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
-            .setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
+            .setLocation(new Point(30, 20, 1000)).setVpDistance(1000)
             .setVpSize(200, 200)
             .setRayTracer(new SimpleRayTracer(scene));
 
+    // private final Scene          scene         = new Scene("Test scene");
+    /** Camera builder for the tests with triangles */
+    private final Camera.Builder cameraBuilder = Camera.getBuilder()
+            .setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
+            .setRayTracer(new SimpleRayTracer(scene));
+
     /** The sphere in the tests */
-    private final Intersectable sphere     = new Sphere(new Point(0, 0, -200), 60d)
-            .setEmission(new Color(BLUE))
+    private final Intersectable sphere     = new Sphere(new Point(0, -50, -200), 60d)
+            .setEmission(new Color(RED))
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30));
     /** The material of the triangles in the tests */
     private final Material       trMaterial = new Material().setKd(0.5).setKs(0.5).setShininess(30);
@@ -41,6 +41,7 @@ public class level7Test {
         scene.lights.add( //
                 new SpotLight(new Color(400, 240, 0), spotLocation, new Vector(1, 1, -3)) //
                         .setKl(1E-5).setKq(1.5E-7));
+
         camera.setImageWriter(new ImageWriter(pictName, 1000, 1000))
                 .build()
                 .renderImage() //
@@ -51,11 +52,96 @@ public class level7Test {
     @Test
     public void sphereTriangleMove2() {
         sphereTriangleHelper("Move2", //
-                new Sphere(new Point(-47, -47, -4),15d), //
-                new Point(-100, -100, 200));
+                new Sphere(new Point(75, 47, 300),15d), //
+                new Point(900, 900, -1000));
     }
 
 
+    @Test
+    public void level7() {
+        scene.geometries.add(
+                new Sphere(new Point(0, -600, -400), 50).setEmission(new Color(PINK))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(0, -620, -400), 50d).setEmission(new Color(RED))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(0, -640, -400), 50).setEmission(new Color(PINK))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(0, -660, -400), 50d).setEmission(new Color(RED))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(120, -600, -400), 50).setEmission(new Color(PINK))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(120, -620, -400), 50d).setEmission(new Color(RED))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(120, -640, -400), 50).setEmission(new Color(PINK))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(120, -660, -400), 50d).setEmission(new Color(RED))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(120, -700, -400), 50d).setEmission(new Color(WHITE))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(0, -700, -400), 50d).setEmission(new Color(WHITE))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)));
+//                new Cylinder(10.0,new Ray(new Point(0, -400, 0),new Vector(1 ,0, 0),new Vector(0, 1, 0)),50)
+//                        .setEmission(new Color(yellow)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)));
+//                new Tube(new Ray(new Point(550, 0, -550),new Vector(1 ,0, 0),new Vector(1, 1, 0)),40)
+//                        .setEmission(new Color(yellow)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+//                 new Tube(new Ray(new Point(700, 80, -700),new Vector(1 ,0, 0),new Vector(1, 1, 0)),40));
+        scene.lights.add(
+                new SpotLight(new Color(400, 240, 0), new Point(100, 550, -250), new Vector(1, 1, -3))
+                        .setKl(1E-5).setKq(1.5E-7));
+        //   scene.background= new Color(25,250,60);
+        cameraBuilder.setLocation(new Point(0, -30, 1000)).setVpDistance(1000)
+                .setVpSize(1000, 1000)
+                .setImageWriter(new ImageWriter("move 2" +
+                        "", 1000, 1000))
+                .build()
+                .renderImage()
+                .writeToImage();
+    }
+    @Test
+    public void l7() {
+        scene.geometries.add(
+                new Sphere(new Point(-200, -200, -3), 50d).setEmission(new Color(YELLOW))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(-400, -200, 0), 20).setEmission(new Color(RED))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(0, 30, 0), 10).setEmission(new Color(PINK))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(0, -660, -400), 50d).setEmission(new Color(RED))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(120, -600, -400), 50).setEmission(new Color(PINK))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(120, -620, -400), 50d).setEmission(new Color(RED))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(120, -640, -400), 50).setEmission(new Color(PINK))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(120, -660, -400), 50d).setEmission(new Color(RED))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(120, -700, -400), 50d).setEmission(new Color(WHITE))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(0, -700, -400), 50d).setEmission(new Color(WHITE))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)));
+//                new Cylinder(10.0,new Ray(new Point(0, -400, 0),new Vector(1 ,0, 0),new Vector(0, 1, 0)),50)
+//                        .setEmission(new Color(yellow)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)));
+//                new Tube(new Ray(new Point(550, 0, -550),new Vector(1 ,0, 0),new Vector(1, 1, 0)),40)
+//                        .setEmission(new Color(yellow)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+//                 new Tube(new Ray(new Point(700, 80, -700),new Vector(1 ,0, 0),new Vector(1, 1, 0)),40));
+//        scene.lights.add(
+//                new SpotLight(new Color(400, 240, 0), new Point(-200, -200, 0), new Vector(1, 1, -3))
+//                        .setKl(1E-5).setKq(1.5E-7));
 
+        scene.lights.add(
+                new SpotLight(new Color(400, 240, 0), new Point(0, 1, 0), new Vector(1, 1, 1))
+                        .setKl(1E-5).setKq(1.5E-7));
+
+        //   scene.background= new Color(25,250,60);
+        cameraBuilder.setLocation(new Point(0, -30, 1000)).setVpDistance(1000)
+                .setVpSize(1000, 1000)
+                .setImageWriter(new ImageWriter("move 2" +
+                        "", 1000, 1000))
+                .build()
+                .renderImage()
+                .writeToImage();
+    }
 
 }
+

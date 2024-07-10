@@ -8,13 +8,15 @@ import geometries.Geometries;
 import java.util.LinkedList;
 import java.util.List;
 
+import static primitives.Color.BLUE;
+
 /**
  * Class representing a scene with various attributes like name, background color, ambient light, geometries, and lights.
  */
 public class Scene {
     public String name;
-    public Color background = Color.BLACK;
-    public AmbientLight ambientLight = AmbientLight.NONE;
+    public Color background = Color.BLUE;
+    public AmbientLight ambientLight = new AmbientLight(BLUE,0.5);
     public Geometries geometries = new Geometries();
     public List<LightSource> lights = new LinkedList<>();
 

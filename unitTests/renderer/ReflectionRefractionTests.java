@@ -106,9 +106,9 @@ public class ReflectionRefractionTests {
     @Test
     public void level7() {
         scene.geometries.add(
-                new Sphere(new Point(400, -300, -490), 250d).setEmission(new Color(PINK))
+                new Sphere(new Point(570, -590, -500), 249d).setEmission(new Color(PINK))
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
-                new Sphere(new Point(150, 50, -600), 125d).setEmission(new Color(BLUE))
+                new Sphere(new Point(445, -500, -300), 165d).setEmission(new Color(BLACK))
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)));
         scene.lights.add(
                 new SpotLight(new Color(400, 240, 0), new Point(100, 550, -250), new Vector(1, 1, -3))
@@ -127,7 +127,7 @@ public class ReflectionRefractionTests {
      * @param triangle     the triangle in the test
      * @param spotLocation the spotlight location in the test */
     private void sphereTriangleHelper(String pictName, Sphere triangle, Point spotLocation) {
-        scene.geometries.add( new Sphere(new Point(400, -300, -490), 250d).setEmission(new Color(PINK))
+        scene.geometries.add( new Sphere(new Point(500, -500, -490), 250d).setEmission(new Color(PINK))
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30))
                 , triangle.setEmission(new Color(BLUE)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)));
         scene.lights.add( //
@@ -146,7 +146,7 @@ public class ReflectionRefractionTests {
     }
 @Test
     public void sphereTriangleMove2() {
-        sphereTriangleHelper("level7.2", new Sphere(new Point(400, -300, -490), 250d),
+        sphereTriangleHelper("level7.2", new Sphere(new Point(400, -300, -490), 125d),
                 new Point(-100, -100, 200));
     }
 
