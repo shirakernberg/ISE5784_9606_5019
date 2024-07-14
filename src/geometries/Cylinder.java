@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * This class represents a cylinder in 3D space, defined by a height, an axis ray, and a radius.
@@ -40,29 +41,34 @@ public class Cylinder extends Tube {
     }
 
     @Override
-    public Vector getNormal(Point p) {
-        // same point of the center base 1
-        if (p.equals(axisRay.getHead()))
+    public Vector getNormal(Point point) {
+        double distanceBase1 = point.distance(axisRay.getHead());
+        Vector axisVec = axisRay.getDirection();
+
+        // the point is P0
+        if (isZero(distanceBase1))
             return axisRay.getDirection().scale(-1).normalize();
-            // same point of the center base 2
-        else if (p.equals(this.axisRay.getPoint(height)))
-            return this.axisRay.getDirection();
-
-        //find the distance between p0 to o
-        double t=this.axisRay.getDirection().dotProduct(p.subtract(axisRay.getHead()));
-
-        // if t = 0 is mean that on base 1
-        if (t == 0)
-            return this.axisRay.getDirection().scale(-1).normalize();
-            // point on base 2
-        else if (t == height)
-            return this.axisRay.getDirection();
-            //point like tube on casing
-        else if (t > 0 && t < this.height)
-            return super.getNormal(p);
-        else
-            throw new IllegalArgumentException("the point not in the range");
+        Point centerBase2 = axisRay.getHead().add(axisVec.scale(height));
+        double distanceBase2 = centerBase2.distance(point);
+        // point is on the center of the far side from P0
+        if (isZero(distanceBase2))
+            return axisVec.normalize();
+            // point is on the close side to P0
+        else if (distanceBase1 < radius && distanceBase2 > distanceBase1)
+            return axisVec.scale(-1).normalize();
+            // point is on the far side from P0
+        else if (distanceBase2 < radius && distanceBase1 > distanceBase2)
+            return axisVec.normalize();
+        else {
+            double t = axisRay.getDirection().dotProduct(point.subtract(axisRay.getHead()));
+            Point O = axisRay.getHead().add(axisRay.getDirection().scale(t));
+            Vector v = point.subtract(O);
+            return v.normalize();
+        }
     }
+
+
+
     /**
      * find intersection points between ray and 3D cylinder
      * @param ray ray towards the sphere
