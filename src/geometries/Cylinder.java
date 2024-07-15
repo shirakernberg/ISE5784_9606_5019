@@ -49,7 +49,7 @@ public class Cylinder extends Tube {
             return this.axisRay.getDirection();
 
         //find the distance between p0 to o
-        double t=this.axisRay.getDirection().dotProduct(p.subtract(axisRay.getHead()));
+        double t = this.axisRay.getDirection().dotProduct(p.subtract(axisRay.getHead()));
 
         // if t = 0 is mean that on base 1
         if (t == 0)
@@ -61,8 +61,10 @@ public class Cylinder extends Tube {
         else if (t > 0 && t < this.height)
             return super.getNormal(p);
         else
-            throw new IllegalArgumentException("the point not in the range");
+            return super.getNormal(p);
     }
+      //  else
+          //  throw new IllegalArgumentException("the point not in the range");}
     /**
      * find intersection points between ray and 3D cylinder
      * @param ray ray towards the sphere

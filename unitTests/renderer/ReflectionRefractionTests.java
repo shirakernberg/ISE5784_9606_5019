@@ -7,6 +7,7 @@ import static java.awt.Color.*;
 
 import geometries.Plane;
 import geometries.Polygon;
+import lighting.DirectionalLight;
 import org.junit.jupiter.api.Test;
 
 import geometries.Sphere;
@@ -106,12 +107,20 @@ public class ReflectionRefractionTests {
     @Test
     public void level7() {
         scene.geometries.add(
-                new Sphere(new Point(570, -590, -500), 249d).setEmission(new Color(PINK))
+                    new Sphere(new Point(570, -590, -500), 249d).setEmission(new Color(PINK))
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
                 new Sphere(new Point(445, -500, -300), 165d).setEmission(new Color(BLACK))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)));
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Sphere(new Point(-440, 105, -400), 280d).setEmission(new Color(127,127,82))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(new Double3(0.5, 0, 0))));
         scene.lights.add(
-                new SpotLight(new Color(400, 240, 0), new Point(100, 550, -250), new Vector(1, 1, -3))
+                new SpotLight(new Color(400, 240, 0), new Point(570, 100, -250), new Vector(1, 1, -3))
+                        .setKl(1E-5).setKq(1.5E-7));
+        scene.lights.add(
+                new SpotLight(new Color(400, 240, 0), new Point(-570, 100, -250), new Vector(-1, 0, 0))
+                        .setKl(1E-5).setKq(1.5E-7));
+        scene.lights.add(
+                new SpotLight(new Color(400, 240, 0), new Point(-1500, 400, 0), new Vector(-1, 0, 0))
                         .setKl(1E-5).setKq(1.5E-7));
 
         cameraBuilder.setLocation(new Point(0, -30, 1000)).setVpDistance(1000)
