@@ -40,20 +40,22 @@ public class TestForProject {
                 .setRayTracer(new SimpleRayTracer(scene));
 
         // Setting up the scene
-        scene.setBackground(new Color(173, 216, 230));
-        scene.geometries.add(new Plane(new Point(10, -0.5, 0), new Vector(0, 1, 0)).setEmission(new Color(0, 100, 0)) //
-                .setMaterial(new Material()));
-
+          scene.setBackground(new Color(173, 216, 230));
+          //grass
+          scene.geometries.add(new Plane(new Point(0, -100, 0), new Vector(0, 1, 0)).setEmission(new Color(0, 100, 0)) //
+                  .setMaterial(new Material()));
+          //lane
         scene.geometries.add(
                 new Polygon(
                         new Point(60, 0, -20),
                         new Point(60, 0, 20),
                         new Point(-60, 0, 20),
                         new Point(-60, 0, -20)
-                ).setMaterial(new Material().setKs(0.7).setKd(0.1).setKr(0.05).setShininess(19))
+                ).setEmission(new Color(orange))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100))
         );
 
-
+/*
         addPin(new Point(10 + 3 * Math.sqrt(27), 0, -9));
         addPin(new Point(10 + 3 * Math.sqrt(27), 0, -3));
         addPin(new Point(10 + 3 * Math.sqrt(27), 0, 3));
@@ -67,7 +69,7 @@ public class TestForProject {
         addPin(new Point(10 + Math.sqrt(27), 0, 3));
 
         addPin(new Point(10, 0, 0));
-
+*/
         scene.geometries.add(
                 new Sphere(new Point(-40, 4, 0), 4)
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300))
