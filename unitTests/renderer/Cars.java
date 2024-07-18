@@ -32,7 +32,8 @@ public class Cars {
         for (int i = -200; i < 200; i += 20) {
             scene.geometries.add(
                     new Polygon(new Point(-2, 0.01, i), new Point(2, 0.01, i), new Point(2, 0.01, i + 10), new Point(-2, 0.01, i + 10))
-                            .setEmission(new Color(WHITE))
+                            .setEmission(new Color(102, 204, 255))
+                            .setMaterial(new Material().setKr(0.9).setKd(0).setShininess(30))
             );
         }
 
@@ -104,14 +105,8 @@ public class Cars {
 
 
         // Adding lights
-        scene.lights.add(new SpotLight(new Color(20, 44, 27), new Point(0, -100, 0), new Vector(1, 1, 1))
-                        .setKl(1E-5).setKq(1.5E-7));
-        scene.lights.add(new SpotLight(new Color(0, 510, 0), new Point(0, 0, 0), new Vector(1, 0, 0)) //
-                .setKl(1).setKq(1));
-        scene.lights.add(new SpotLight(new Color(WHITE),new Point(50,-30,200),new Vector(-1,0,-1)).setKl(0.0004).setKq(0.0000006));
-        scene.lights.add(new SpotLight(new Color(WHITE),new Point(-75,30,200),new Vector(1,0,-0.55)).setKl(0.0004).setKq(0.0000006));
-        scene.lights.add(new SpotLight(new Color(950, 550, 0), new Point(-95, 0, 50), new Vector(82, -18, -25)).setKl(0.1).setKq(0.0001));
-        scene.lights.add(new SpotLight(new Color(102, 255, 255), new Point(79, -30, 100), new Vector(-5, 0, -14)).setKl(0.1).setKq(0.0001));
+        scene.lights.add(new PointLight(new Color(255, 255, 255), new Point(-30, 0, 30)).setKq(0.0001).setKl(0.0001));
+        scene.lights.add(new DirectionalLight(new Color(255, 255, 255), new Vector(1, 1, 0)));
 
         // Rendering the image
         camera.setImageWriter(new ImageWriter("car_scene", 500, 500))

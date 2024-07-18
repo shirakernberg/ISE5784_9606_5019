@@ -33,7 +33,7 @@ public class TestForProject {
     public void Bowling() {
         // Building the camera with the builder
         Camera.Builder cameraBuilder = Camera.getBuilder()
-                .setLocation(new Point(-60, 20, 10))
+                .setLocation(new Point(-90, 40, -10))
                 .setDirection(new Vector(70, -20, -10), new Vector(1, 3.5, 0))
                 .setVpSize(150, 150)
                 .setVpDistance(100)
