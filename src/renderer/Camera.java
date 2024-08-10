@@ -1,14 +1,12 @@
 package renderer;
 
-import primitives.Color;
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
-import scene.Scene;
+import primitives.*;
+
 import java.util.MissingResourceException;
 
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
+import java.util.stream.*;
 
 /**
  * Camera class represents a camera in 3D space with a position and orientation.
@@ -21,6 +19,8 @@ public class Camera implements Cloneable {
     private double vpWidth = 0.0;
     private double vpHeight = 0.0;
     private double vpDistance = 0.0;
+    int numOfRays=4;
+    private double print = 0;
 
     // Image writer for creating the image file by the camera
     private ImageWriter imageWriter;
@@ -28,11 +28,14 @@ public class Camera implements Cloneable {
     // Ray tracer for casting the rays from the camera
     private RayTracerBase rayTracer;
 
+    private int numOfPointsOnAperture;
+
     // Private constructor for the Builder to use
     private Camera() {}
 
+
     /**
-     * Returns a new Builder instance for creating a Camera.
+     * Returns a new Bulder instance for creating a Camera.
      * @return A new Camera Builder.
      */
     public static Builder getBuilder() {
@@ -45,7 +48,16 @@ public class Camera implements Cloneable {
     public static class Builder {
         // Camera instance to build
         final private Camera camera;
+        int numOfRays;
+        /*
+         * number of threads
+         */
+        private int threads = 0;
+        /*
+         * interval of debug prints option
+         */
 
+        private final int SPARE_THREADS = 2;
         /**
          * Constructor for Builder initializes a new Camera instance.
          */
@@ -128,7 +140,27 @@ public class Camera implements Cloneable {
             this.camera.rayTracer = rayTracer;
             return this;
         }
-
+        /**
+         * setter for multithreading
+         *
+         * @param threads number of threads
+         * @return the updated camera
+         */
+        public Builder setMultithreading(int threads) {
+            if (threads < 0)
+                throw new IllegalArgumentException("Multithreading parameter must be 0 or bigger");
+            else if (threads > 0)
+                this.threads = threads;
+            else {
+                // number of cores less the spare threads is taken
+                int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
+                if (cores <= 2)
+                    this.threads = 1;
+                else
+                    this.threads = cores;
+            }
+            return this;
+        }
         /**
          * Translate the camera by a vector.
          * @param translation Vector for translation.
@@ -198,7 +230,16 @@ public class Camera implements Cloneable {
 
             return this;
         }
-
+        /**
+         * setter for NumOfRays
+         *
+         * @param num to ser for NumOfRays
+         * @return the updated camera
+         */
+        public Builder setNumOfRays(int num) {
+            this.numOfRays = num;
+            return this;
+        }
         /**
          * Builds and returns the Camera instance.
          * @return The constructed Camera instance.
@@ -268,16 +309,17 @@ public class Camera implements Cloneable {
      * @return the camera object itself
      */
     public Camera renderImage() {
-        final int nX = imageWriter.getNx();
-        final int nY = imageWriter.getNy();
+        int nx = this.imageWriter.getNx();
+        int ny = this.imageWriter.getNy();
+        PixelManager pixel = new PixelManager(ny, nx, print);
+        IntStream.range(0, ny).parallel().forEach(i -> IntStream.range(0, nx).parallel().forEach(j -> {
+            this.imageWriter.writePixel(i,j,castRay(nx, ny,i, j));
 
-        for (int i = 0; i < nY; ++i) {
-            for (int j = 0; j < nX; ++j) {
-                castRay(nX, nY, j, i);
-            }
-        }
+            pixel.pixelDone();
+        }));
         return this;
     }
+
 
     /**
      * Create a grid [over the picture] in the pixel color map. Given the grid's step and color.
@@ -310,12 +352,45 @@ public class Camera implements Cloneable {
 
     /**
      * Cast ray from camera in order to color a pixel.
-     * @param nX  resolution on X axis (number of pixels in row)
-     * @param nY  resolution on Y axis (number of pixels in column)
-     * @param col pixel's column number (pixel index in row)
-     * @param row pixel's row number (pixel index in column)
+     *
+     * @param nX resolution on X axis (number of pixels in row)
+     * @param nY resolution on Y axis (number of pixels in column)
+     *           //     * @param col pixel's column number (pixel index in row)
+     *           //     * @param row pixel's row number (pixel index in column)
+     * @return
      */
-    private void castRay(int nX, int nY, int col, int row) {
-        imageWriter.writePixel(col, row, rayTracer.traceRay(constructRay(nX, nY, col, row)));
+//    private void castRay(int nX, int nY, int col, int row) {
+//        imageWriter.writePixel(col, row, rayTracer.traceRay(constructRay(nX, nY, col, row)));
+//
+//    }
+
+    private Color castRay(int nX, int nY, int j, int i) {
+        // Initialize the color sum to black.
+        Color sum = new Color(0, 0, 0);
+
+        // Loop through each sample within the pixel.
+        for (int k = 0; k < numOfRays * numOfRays; ++k) {
+            // Calculate the X and Y offsets for the current sample.
+            double x = j + (k % numOfRays + (Math.random() - 0.5)) / (double) numOfRays;
+            double y = i + (k / numOfRays + (Math.random() - 0.5)) / (double) numOfRays;
+
+            // Construct the ray for the current sample.
+            Ray ray = constructRay(nX, nY,(int)x, (int)y);
+
+            // Trace the ray and get its color.
+            Color color = rayTracer.traceRay(ray);
+
+            // Add the color to the sum.
+            sum = sum.add(color);
+        }
+
+        // Calculate the average color for the pixel by scaling the sum.
+        Color color = sum.scale(1d / (numOfRays * numOfRays));
+
+        // Write the average color to the pixel in the image.
+        imageWriter.writePixel(j, i, color);
+
+        return color;
     }
+
 }

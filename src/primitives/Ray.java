@@ -3,6 +3,7 @@ package primitives;
 import java.util.List;
 import java.util.Objects;
 
+import com.sun.source.tree.BreakTree;
 import geometries.Intersectable.GeoPoint;
 
 import static primitives.Util.isZero;
@@ -49,9 +50,13 @@ public class Ray {
      * @return the ray points from a given distance
      */
     public Point getPoint(double t){
-        if(isZero(t))
+
+        try {
+            return head.add(direction.scale(t));
+        }
+        catch (IllegalArgumentException ignoreException) {
             return head;
-        return head.add(direction.scale(t));
+        }
     }
     /**
      * @return the starting point of the ray.

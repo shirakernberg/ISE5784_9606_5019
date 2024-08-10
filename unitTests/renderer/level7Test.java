@@ -95,19 +95,9 @@ public class level7Test {
     /** Sphere-Triangle shading - move triangle upper-righter */
     @Test
     public void snowman() {
-//        scene.lights.add(//body light
-//                new SpotLight(new Color(RED), new Point(0, 250, 200), new Vector(-1, 1, 0))
-//                        .setKl(1E-5).setKq(1.5E-5));
-
-//        scene.lights.add(//hat light
-//                new SpotLight(new Color(254,255,231), new Point(-400, 250, 200), new Vector(1, 1, 0))
-//                        .setKl(1E-5).setKq(1.5E-5));
-        scene.lights.add(//hat light
-                new SpotLight(new Color(254,255,231), new Point(-500, 250, 500), new Vector(1, 1, 0))
-                        .setKl(1E-5).setKq(1.5E-5));
         scene.lights.add(
-                new SpotLight(new Color(400, 240, 0), new Point(400, 250, 200), new Vector(1, 1, 5))
-                        .setKl(1E-5).setKq(1.5E-5));
+                new SpotLight(new Color(109, 255, 72), new Point(300, 170, 200), new Vector(-800, 0, -500))
+                        .setKl(1E-5).setKq(1.5E-7));
         scene.geometries.add(
                 //eyes
                 new Sphere(new Point(-33,90,500),8d).setEmission(new Color(BLUE)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
@@ -117,7 +107,7 @@ public class level7Test {
                 new Sphere(new Point(-10,0,0),170d).setEmission(new Color(255,232,232)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
                 new Sphere(new Point(-10,170,0),140d).setEmission(new Color(255,232,232)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
                 new Plane(new Point(500, -1000, 0), new Vector(0, -300, -1))//floor
-                        .setEmission(new Color(7,9,11)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                        .setEmission(new Color(black)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
                 new Triangle(new Point(-7,70,500),new Point(-25,70,500),new Point(-45,45,500))//nose
                         .setEmission(new Color(ORANGE)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
                 //bottons
@@ -131,7 +121,7 @@ public class level7Test {
 
 
                 );
-        scene.background= new Color(26,25,40);
+        scene.background= new Color(14,11,20);
         cameraBuilder.setLocation(new Point(0, -30, 1000)).setVpDistance(1000)
                 .setVpSize(1000, 1000)
                 .setImageWriter(new ImageWriter("Snowman" +

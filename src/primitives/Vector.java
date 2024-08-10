@@ -20,7 +20,7 @@ public class Vector extends Point {
     Vector(Double3 xyz) {
         super(xyz);
         if (xyz.equals(Double3.ZERO))
-            throw new IllegalArgumentException("error received trivial vector");
+            throw new IllegalArgumentException("ZERO  vector is not valid");
     }
 
     @Override
