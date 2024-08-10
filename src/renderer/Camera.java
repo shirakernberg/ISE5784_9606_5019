@@ -8,6 +8,7 @@ import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 import java.util.stream.*;
 
+
 /**
  * Camera class represents a camera in 3D space with a position and orientation.
  * It uses the Builder design pattern to construct instances.
@@ -19,7 +20,7 @@ public class Camera implements Cloneable {
     private double vpWidth = 0.0;
     private double vpHeight = 0.0;
     private double vpDistance = 0.0;
-    int numOfRays=4;
+    int numOfRays=2;
     private double print = 0;
 
     // Image writer for creating the image file by the camera

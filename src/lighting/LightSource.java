@@ -4,6 +4,7 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+
 /**
  * Interface for different light sources in the scene.
  */

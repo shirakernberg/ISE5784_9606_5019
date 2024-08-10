@@ -2,6 +2,7 @@ package lighting;
 
 import primitives.Color;
 
+
 /**
  * Abstract class for different types of light sources in the scene.
  */

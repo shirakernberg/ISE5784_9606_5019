@@ -253,4 +253,6 @@ public class SimpleRayTracer extends RayTracerBase {
         }
         return ktr;
     }
+
 }
+

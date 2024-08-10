@@ -20,6 +20,7 @@ public class DirectionalLight extends Light implements LightSource {
         this.direction = direction.normalize();
     }
 
+
     /**
      * Get the intensity of the light at a point.
      * @param p the point

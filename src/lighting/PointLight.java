@@ -4,6 +4,7 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+
 /**
  * Class representing a point light source.
  */

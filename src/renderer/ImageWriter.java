@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import primitives.Color;
 
+
 /** Image writer class combines accumulation of pixel color matrix and finally
  * producing a non-optimized jpeg image from this matrix. The class although is
  * responsible for holding image related parameters of View Plane - pixel matrix

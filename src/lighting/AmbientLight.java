@@ -3,6 +3,7 @@ package lighting;
 import primitives.Color;
 import primitives.Double3;
 
+
 /**
  * Class representing ambient light for scenes.
  */
