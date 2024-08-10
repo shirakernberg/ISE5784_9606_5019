@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import scene.Scene;
 
 import static java.awt.Color.*;
-
+//test
 public class Space {
     private final Scene scene = new Scene("Test scene");
 
@@ -323,6 +323,10 @@ public class Space {
     @Test
     public void antiTest(){
         scene.geometries.add(
+                // big shpere
+                new Sphere(new Point(200, 0, -400), 300d).setEmission(new Color(28, 38, 66))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setKt(0.9999999).setShininess(300)),
+                //baby sphere
                 new Triangle(new Point(0, 20, 300), new Point(30, 30, 300), new Point(20, 50, 300))
                         .setEmission(new Color(red)).setMaterial(new Material().setKs(0.7)),
                 new Sphere(new Point(0,0,0),50)   .setEmission(new Color(BLUE)).setMaterial(new Material().setKs(0.7)));
